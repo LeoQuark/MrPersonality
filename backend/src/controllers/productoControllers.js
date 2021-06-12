@@ -1,4 +1,4 @@
-import Pool from "../database/connection.js";
+import Pool from "../database/connection";
 
 // Funcion para crear productos
 export const createProduct = async (req, res) => {

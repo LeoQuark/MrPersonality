@@ -6,7 +6,7 @@ import {
   getAllProduct,
   updateProduct,
   deleteProduct,
-} from "../controllers/productoControllers.js";
+} from "../controllers/productoControllers";
 
 //RUTAS
 const router = Router();

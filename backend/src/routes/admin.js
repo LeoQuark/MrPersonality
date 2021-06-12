@@ -6,7 +6,7 @@ import {
   getAllAdmin,
   updateAdmin,
   deleteAdmin,
-} from "../controllers/adminControllers.js";
+} from "../controllers/adminControllers";
 
 //RUTAS
 const router = Router();

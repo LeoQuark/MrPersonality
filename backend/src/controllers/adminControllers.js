@@ -1,4 +1,4 @@
-import Pool from "../database/connection.js";
+import Pool from "../database/connection";
 // import bcrypt from "bcrypt";
 
 export const createAdmin = async (req, res) => {
