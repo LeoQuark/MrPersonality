@@ -6,19 +6,19 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import HeaderStats from "components/Headers/HeaderStats.js";
-import FooterAdmin from "components/Footers/FooterAdmin.js";
+// import FooterAdmin from "components/Footers/FooterAdmin.js";
 
 // views
 
-import Dashboard from "views/admin/Dashboard.js";
-import Settings from "views/admin/Settings.js";
-import Tables from "views/admin/Tables.js";
+import Dashboard from "views/admin/Dashboard";
+import Perfil from "views/admin/Perfil";
+import Tables from "views/admin/Tables";
 
 // secciones
-import Ventas from "views/admin/Ventas.jsx";
-import Productos from "views/admin/Productos.jsx";
-import Clientes from "views/admin/Clientes.jsx";
-import Proveedores from "views/admin/Proveedores.jsx";
+import Ventas from "views/admin/Ventas";
+import Productos from "views/admin/Productos";
+import Clientes from "views/admin/Clientes";
+import Proveedores from "views/admin/Proveedores";
 
 export default function Admin() {
   return (
@@ -35,12 +35,11 @@ export default function Admin() {
             <Route path="/admin/productos" exact component={Productos} />
             <Route path="/admin/proveedores" exact component={Proveedores} />
             <Route path="/admin/clientes" exact component={Clientes} />
-            {/* <Route path="/admin/maps" exact component={Maps} /> */}
-            <Route path="/admin/settings" exact component={Settings} />
+            <Route path="/admin/perfil" exact component={Perfil} />
             <Route path="/admin/tables" exact component={Tables} />
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
-          <FooterAdmin />
+          {/* <FooterAdmin /> */}
         </div>
       </div>
     </>

@@ -39,10 +39,6 @@ import Register from "views/auth/Register.js";
 const Auth = () => {
   return (
     <React.Fragment className="h-screen">
-      <div className="grid grid-cols-4 h-screen gap-2 bg-red-200">
-        <div className="col-start-1 col-end-3 bg-red-400">1</div>
-        <div className="bg-red-500">2</div>
-      </div>
       <Switch>
         <Route path="/auth/login" exact component={Login} />
         <Route path="/auth/register" exact component={Register} />

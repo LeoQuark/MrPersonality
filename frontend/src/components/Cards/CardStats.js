@@ -10,6 +10,7 @@ export default function CardStats({
   statDescripiron,
   statIconName,
   statIconColor,
+  link,
 }) {
   return (
     <>
@@ -80,4 +81,5 @@ CardStats.propTypes = {
   // can be any of the background color utilities
   // from tailwindcss
   statIconColor: PropTypes.string,
+  link:PropTypes.string,
 };

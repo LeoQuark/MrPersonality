@@ -5,7 +5,7 @@ import React from "react";
 import CardSettings from "components/Cards/CardSettings.js";
 import CardProfile from "components/Cards/CardProfile.js";
 
-export default function Settings() {
+export default function Perfil() {
   return (
     <>
       <div className="flex flex-wrap">

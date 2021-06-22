@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import { createPopper } from "@popperjs/core";
 
 const UserDropdown = () => {
@@ -43,43 +45,24 @@ const UserDropdown = () => {
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
-        <a
-          href="#pablo"
+        <Link
+          to="/admin/perfil"
           className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700 hover:bg-gray-300 rounded-lg"
           }
-          onClick={(e) => e.preventDefault()}
+          // onClick={(e) => e.preventDefault()}
         >
-          Action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
-        </a>
+          Ver Perfil
+        </Link>
         <div className="h-0 my-2 border border-solid border-blueGray-100" />
-        <a
-          href="#pablo"
+        <Link
+          to="/auth/login"
           className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700 hover:bg-gray-300 rounded-lg"
           }
-          onClick={(e) => e.preventDefault()}
         >
-          Seprated link
-        </a>
+          <i class="fas fa-sign-in-alt fa-lg mx-2"></i> Cerrar sesión
+        </Link>
       </div>
     </>
   );

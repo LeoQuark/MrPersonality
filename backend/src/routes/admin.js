@@ -1,5 +1,11 @@
 import { Router } from "express";
-
+import { check } from "express-validator";
+//Middlewares
+import { validarCampos } from '../middlewares/validation'
+import { validateJwt } from '../middlewares/validate-jwt'
+//Helpers
+import { isEmailValid, existUserForId } from "../helpers/db-validators";
+//Controllers
 import {
   createAdmin,
   getAdmin,
@@ -12,16 +18,45 @@ import {
 const router = Router();
 
 //POST
-router.post("/create", createAdmin);
+router.post("/create", [
+  check('nombre', "El nombre es obligatorio").not().isEmpty(),
+  check('password', "La contraseña es obligatoria").isLength({ min: 5 }),
+  check("correo", "El correo no es valido").isEmail(),
+  check("correo").custom(isEmailValid),
+  validarCampos,
+],
+  createAdmin)
+;
 
 //GET
-router.get("/get/:id", getAdmin);
+router.get("/get/:id",
+  [
+    check('id').custom(existUserForId),
+    validarCampos,
+  ],
+  getAdmin
+);
+
 router.get("/getAll", getAllAdmin);
 
 //UPDATE o PUT
-router.put("/update/:id", updateAdmin);
+router.put("/update/:id",
+  [
+    check('id').custom(existUserForId),
+    validarCampos,
+  ],
+  updateAdmin
+);
 
 //DELETE
-router.delete("/delete/:id", deleteAdmin);
+router.delete("/delete/:id",
+  [
+    //Validar que exista el token del usuario
+    validateJwt,
+    check('id').custom(existUserForId),
+    validarCampos,
+  ],
+  deleteAdmin
+);
 
 export default router;

@@ -9,7 +9,7 @@ export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   return (
     <>
-      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
+      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-4">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           {/* Toggler */}
           <button
@@ -89,23 +89,23 @@ export default function Sidebar() {
                   className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase font-bold block"
                   to="/admin/dashboard"
                 >
-                  <i className="fas fa-user text-blueGray-400 mr-3 text-sm"></i>{" "}
+                  <i className="fas fa-user text-blueGray-400 mx-3 mr-4 text-sm"></i>{" "}
                   Nombre de usuario
                 </Link>
               </li>
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
+                    "text-xs uppercase py-2 my-1 font-bold block " +
                     (window.location.href.indexOf("/admin/settings") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
-                  to="/admin/settings"
+                  to="/admin/perfil"
                 >
                   <i
                     className={
-                      "fas fa-cogs mr-2 text-sm " +
+                      "fas fa-cogs mx-3 text-sm " +
                       (window.location.href.indexOf("/admin/settings") !== -1
                         ? "opacity-75"
                         : "text-blueGray-500")
@@ -128,16 +128,16 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
+                    "text-xs uppercase py-2 my-1 font-bold block " +
                     (window.location.href.indexOf("/admin/dashboard") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                   to="/admin/dashboard"
                 >
                   <i
                     className={
-                      "fas fa-th-large mr-2 text-sm " +
+                      "fas fa-th-large mx-3 text-sm " +
                       (window.location.href.indexOf("/admin/dashboard") !== -1
                         ? "opacity-75"
                         : "text-blueGray-500")
@@ -150,16 +150,16 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
+                    "text-xs uppercase py-2 my-1 font-bold block " +
                     (window.location.href.indexOf("/admin/ventas") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                   to="/admin/ventas"
                 >
                   <i
                     className={
-                      "fas fa-dollar-sign ml-1 mr-3 text-sm " +
+                      "fas fa-dollar-sign mx-3 mr-4 text-sm " +
                       (window.location.href.indexOf("/admin/ventas") !== -1
                         ? "opacity-75"
                         : "text-blueGray-500")
@@ -171,16 +171,16 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
+                    "text-xs uppercase py-2 my-1 font-bold block " +
                     (window.location.href.indexOf("/admin/productos") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                   to="/admin/productos"
                 >
                   <i
                     className={
-                      "fas fa-cubes mr-3 text-sm " +
+                      "fas fa-cubes mx-3 text-sm " +
                       (window.location.href.indexOf("/admin/productos") !== -1
                         ? "opacity-75"
                         : "text-blueGray-500")
@@ -192,16 +192,16 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
+                    "text-xs uppercase py-2 my-1 font-bold block " +
                     (window.location.href.indexOf("/admin/clientes") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                   to="/admin/clientes"
                 >
                   <i
                     className={
-                      "fas fa-users mr-2 text-sm " +
+                      "fas fa-users mx-2 text-sm " +
                       (window.location.href.indexOf("/admin/clientes") !== -1
                         ? "opacity-75"
                         : "text-blueGray-500")
@@ -213,16 +213,16 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
+                    "text-xs uppercase py-2 my-1 font-bold block " +
                     (window.location.href.indexOf("/admin/proveedores") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                   to="/admin/proveedores"
                 >
                   <i
                     className={
-                      "fas fa-truck mr-2 text-sm " +
+                      "fas fa-truck mx-2 text-sm " +
                       (window.location.href.indexOf("/admin/proveedores") !== -1
                         ? "opacity-75"
                         : "text-blueGray-500")
@@ -235,22 +235,22 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
+                    "text-xs uppercase py-2 my-1 font-bold block " +
                     (window.location.href.indexOf("/admin/tables") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                   to="/admin/tables"
                 >
                   <i
                     className={
-                      "fas fa-table mr-2 text-sm " +
+                      "fas fa-table mx-2 text-sm " +
                       (window.location.href.indexOf("/admin/tables") !== -1
                         ? "opacity-75"
                         : "text-blueGray-500")
                     }
                   ></i>{" "}
-                  Tables
+                  Tablas
                 </Link>
               </li>
             </ul>
@@ -264,7 +264,7 @@ export default function Sidebar() {
                   className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
                   to="/auth/login"
                 >
-                  <i className="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"></i>{" "}
+                  <i className="fas fa-fingerprint text-blueGray-400 mx-2 text-sm"></i>{" "}
                   Cerrar sesión
                 </Link>
               </li>

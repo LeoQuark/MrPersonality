@@ -4,6 +4,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 
 //Rutas
+import authRoutes from './routes/auth'
 import adminRoutes from "./routes/admin";
 import productRoutes from "./routes/producto";
 import proveedorRoutes from "./routes/proveedor";
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use(cors());
 
 //Ruta inicial de la API
+app.use('/api/auth', authRoutes)
 app.use("/api/admin", adminRoutes);
 app.use("/api/producto", productRoutes);
 app.use("/api/proveedor", proveedorRoutes);

@@ -1,10 +1,15 @@
 import React from "react";
 
+//component 
+import CardTable from '../../components/Cards/CardTable'
+
 const Ventas = () => {
   return (
     <>
-      <div className="flex flex-wrap mt-4 text-white">
-        <div className="w-full lg:w-8/12 px-4">dsds</div>
+      <div className="flex flex-wrap mt-4">
+        <div className="w-full mb-12 px-4">
+          <CardTable />
+        </div>
       </div>
     </>
   );
