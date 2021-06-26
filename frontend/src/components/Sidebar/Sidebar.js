@@ -5,7 +5,10 @@ import { Link } from "react-router-dom";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 
-export default function Sidebar() {
+export default function Sidebar(props) {
+  const user = props.user;
+  // console.log(user.id_admin);
+
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   return (
     <>
@@ -49,7 +52,7 @@ export default function Sidebar() {
                 <div className="w-6/12">
                   <Link
                     className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0 tracking-widestMore"
-                    to="/"
+                    to={`/admin/dashboard/${user.id_admin}`}
                   >
                     Mr Personality
                   </Link>
@@ -86,27 +89,27 @@ export default function Sidebar() {
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
                 <Link
-                  className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase font-bold block"
-                  to="/admin/dashboard"
+                  className="my-1 text-blueGray-700 hover:text-blueGray-500 text-xs uppercase font-bold block"
+                  to={`/admin/dashboard/${user.id_admin}`}
                 >
                   <i className="fas fa-user text-blueGray-400 mx-3 mr-4 text-sm"></i>{" "}
-                  Nombre de usuario
+                  {user.nombre}
                 </Link>
               </li>
               <li className="items-center">
                 <Link
                   className={
                     "text-xs uppercase py-2 my-1 font-bold block " +
-                    (window.location.href.indexOf("/admin/settings") !== -1
+                    (window.location.href.indexOf("/admin/perfil") !== -1
                       ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
-                  to="/admin/perfil"
+                  to={`/admin/perfil/${user.id_admin}`}
                 >
                   <i
                     className={
                       "fas fa-cogs mx-3 text-sm " +
-                      (window.location.href.indexOf("/admin/settings") !== -1
+                      (window.location.href.indexOf("/admin/perfil") !== -1
                         ? "opacity-75"
                         : "text-blueGray-500")
                     }
@@ -133,7 +136,7 @@ export default function Sidebar() {
                       ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
-                  to="/admin/dashboard"
+                  to={`/admin/dashboard/${user.id_admin}`}
                 >
                   <i
                     className={
@@ -155,7 +158,7 @@ export default function Sidebar() {
                       ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
-                  to="/admin/ventas"
+                  to={`/admin/ventas/${user.id_admin}`}
                 >
                   <i
                     className={
@@ -176,7 +179,7 @@ export default function Sidebar() {
                       ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
-                  to="/admin/productos"
+                  to={`/admin/productos/${user.id_admin}`}
                 >
                   <i
                     className={
@@ -197,7 +200,7 @@ export default function Sidebar() {
                       ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
-                  to="/admin/clientes"
+                  to={`/admin/clientes/${user.id_admin}`}
                 >
                   <i
                     className={
@@ -218,7 +221,7 @@ export default function Sidebar() {
                       ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
-                  to="/admin/proveedores"
+                  to={`/admin/proveedores/${user.id_admin}`}
                 >
                   <i
                     className={
@@ -240,7 +243,7 @@ export default function Sidebar() {
                       ? "text-white bg-black rounded-lg hover:bg-gray-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
-                  to="/admin/tables"
+                  to={`/admin/tables/${user.id_admin}`}
                 >
                   <i
                     className={

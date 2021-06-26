@@ -11,17 +11,17 @@ import UserState from "./context/UserState";
 
 // layouts
 import Admin from "layouts/Admin";
-import Auth from "layouts/Auth";
+import Auth from "./layouts/Auth";
 
 ReactDOM.render(
   <UserState>
     <BrowserRouter>
       <Switch>
-        {/* add routes with layouts */}
-        <Route path="/auth" exact component={Auth} />
-        {/* add routes without layouts */}
-        <Route path="/admin" component={Admin} />
-        {/* add redirect for first page */}
+        {/* rutas para el login con layout(jsx principal) */}
+        <Route path="/auth" component={Auth} />
+        {/* rutas para el panel admin con layout */}
+        <Route path="/admin/:id" component={Admin} />
+        {/* redirect para que que se dirija al login*/}
         <Redirect from="*" to="/auth" />
       </Switch>
     </BrowserRouter>
