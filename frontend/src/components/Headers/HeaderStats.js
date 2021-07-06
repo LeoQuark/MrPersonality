@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import UserContext from "../../context/UserContext";
 
 // components
 import CardStats from "components/Cards/CardStats.js";
 
 export default function HeaderStats() {
+  const { user } = useContext(UserContext);
+  const id = user.user.id_admin;
+
   return (
     <>
       {/* Header */}
@@ -13,8 +17,8 @@ export default function HeaderStats() {
           <div>
             {/* Card stats */}
             <div className="flex flex-wrap">
-              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <Link to="/admin/ventas">
+              <div className="w-full sm:w-6/12 xl:w-3/12 px-4">
+                <Link to={`/admin/ventas/${id}`}>
                   <CardStats
                     statSubtitle="Ventas"
                     statTitle="2.000"
@@ -28,8 +32,8 @@ export default function HeaderStats() {
                   />
                 </Link>
               </div>
-              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <Link to="/admin/productos">
+              <div className="w-full sm:w-6/12 xl:w-3/12 px-4">
+                <Link to={`/admin/productos/${id}`}>
                   <CardStats
                     statSubtitle="Productos"
                     statTitle="450"
@@ -42,8 +46,8 @@ export default function HeaderStats() {
                   />
                 </Link>
               </div>
-              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <Link to="/admin/clientes">
+              <div className="w-full sm:w-6/12 xl:w-3/12 px-4">
+                <Link to={`/admin/clientes/${id}`}>
                   <CardStats
                     statSubtitle="Clientes"
                     statTitle="924"
@@ -56,8 +60,8 @@ export default function HeaderStats() {
                   />
                 </Link>
               </div>
-              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <Link to="/admin/proveedores">
+              <div className="w-full sm:w-6/12 xl:w-3/12 px-4">
+                <Link to={`/admin/proveedores/${id}`}>
                   <CardStats
                     statSubtitle="Proveedores"
                     statTitle="49,65%"

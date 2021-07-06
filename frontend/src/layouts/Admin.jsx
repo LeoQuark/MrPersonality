@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 // Session storage
@@ -11,6 +11,7 @@ import {
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import HeaderStats from "components/Headers/HeaderStats.js";
+import UserContext from "context/UserContext";
 
 // views
 import Dashboard from "views/admin/Dashboard";
@@ -24,15 +25,21 @@ import Clientes from "views/admin/Clientes";
 import Proveedores from "views/admin/Proveedores";
 
 export default function Admin() {
+  const { user, setUser } = useContext(UserContext);
   const [token, setToken] = useState();
   const [userData, setUserData] = useState({});
+  //console.log(user);
   // console.log(token, userData);
   useEffect(() => {
     const getSessionStorage = () => {
       setToken(getTokenSessionStorage());
       setUserData(getUserSessionStorage());
+      // console.log(getUserSessionStorage());
+      setUser(getUserSessionStorage());
     };
     getSessionStorage();
+    //user del context
+    // console.log(user);
   }, []);
 
   return (
@@ -41,7 +48,9 @@ export default function Admin() {
       <div className="relative md:ml-64 bg-blueGray-100">
         <AdminNavbar />
         {/* Header */}
-        <HeaderStats />
+        <div className="">
+          <HeaderStats />
+        </div>
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
           <Switch>
             <Route path="/admin/dashboard/:id" exact component={Dashboard} />

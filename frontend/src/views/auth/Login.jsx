@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import {
   setUserSessionStorage,
   removeUserSessionStorage,
 } from "../../utils/sessionStorage";
+import UserContext from "../../context/UserContext";
 
 export default function Login() {
+  const { setUser } = useContext(UserContext);
   const history = useHistory();
   const [showPass, setShowPass] = useState(false);
   const [userData, setUserData] = useState({});
+  const [errorSubmit, setErrorSubmit] = useState(false);
 
   const handleShowPass = (event) => {
     event.preventDefault();
@@ -35,17 +38,23 @@ export default function Login() {
       .then(
         (response) => {
           if (response.status == 200) {
+            setErrorSubmit(false);
             // console.log(response.status);
             console.log(response);
             const token = response.data.token;
             const user = JSON.stringify(response.data.user);
-
+            setUser(JSON.parse(user));
+            console.log("user", user);
             setUserSessionStorage(token, user);
             history.push(`/admin/${response.data.user.id_admin}`);
+          } else {
+            console.log("object");
           }
         },
         (error) => {
+          console.log();
           console.log(error);
+          setErrorSubmit(true);
         }
       );
   };
@@ -111,6 +120,21 @@ export default function Login() {
                       />
                     </div>
                   </div>
+                  {errorSubmit && (
+                    <div
+                      className={
+                        "m-3 pt-3 errorAlert" +
+                        `${setInterval(() => setErrorSubmit(false), 5000)}`
+                      }
+                    >
+                      <div className="p-2 px-3 bg-red-200 text-red-600 border-2 border-red-300 rounded-md ">
+                        <p>
+                          Error al iniciar sesión, revisa tu correo o tu
+                          contraseña !
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   {/* <div>
                     <label className="inline-flex items-center cursor-pointer">
                       <input

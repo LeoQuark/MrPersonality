@@ -1,0 +1,28 @@
+.errorAlert {
+  animation: translateAndOpacity 0.5s ease-in-out 0s 1;
+}
+
+@keyframes translateAndOpacity {
+  0% {
+    transform: translateY(-10px);
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0px);
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* from {
+    top: -20px;
+    opacity: o;
+  }
+  to {
+    top: 0px;
+    opacity: 1;
+  } */
+}

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { GET_USER, SET_USER } from "./types";
+import { SET_USER } from "./types";
 
 /*
     Creación de las acciones que podrá realizar el estado global User
@@ -7,7 +7,7 @@ import { GET_USER, SET_USER } from "./types";
 */
 export default (state, action) => {
   const { payload, type } = action;
-  // console.log(payload);
+  console.log("payload", payload);
   switch (type) {
     case SET_USER:
       return {
