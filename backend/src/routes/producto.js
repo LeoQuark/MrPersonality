@@ -1,4 +1,5 @@
 import { Router } from "express";
+import multer from "../multer";
 
 import {
   createProduct,
@@ -10,9 +11,8 @@ import {
 
 //RUTAS
 const router = Router();
-
 //POST
-router.post("/create", createProduct);
+router.post("/create", multer.single("imagen"), createProduct);
 
 //GET
 router.get("/get/:id", getProductById);

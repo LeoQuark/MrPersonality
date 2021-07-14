@@ -4,6 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
+import { API_URL } from "../../utils/api-data";
 
 export default function BotonEliminars(props) {
   const { user } = useContext(UserContext);
@@ -33,7 +34,7 @@ export default function BotonEliminars(props) {
     const id = seleccion.id_producto;
     // console.log(usuario, user);
     const borrar = await axios
-      .delete(`http://localhost:4000/api/producto/delete/${id}`)
+      .delete(`${API_URL}/api/producto/delete/${id}`)
       .then(
         (response) => {
           console.log(response);

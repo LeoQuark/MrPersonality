@@ -1,59 +1,65 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef, useState, useEffect, useContext } from "react";
+import { Fragment, useRef, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
+import { API_URL } from "../../utils/api-data";
 
 export default function BotonAgregar(props) {
   const { user } = useContext(UserContext);
   const history = useHistory();
+  const formData = new FormData();
 
   const [open, setOpen] = useState(false);
-  const [seleccion, setSeleccion] = useState({});
   const [inputProductos, setInputProductos] = useState({});
 
   const cancelButtonRef = useRef(null);
-  const seleccionarProducto = (elemento) => {
-    setSeleccion(elemento);
-    setOpen(true);
-  };
 
   const handleInput = (event) => {
     event.preventDefault();
     // setInputProductos({ ...inputProductos, id_admin: user.id_admin });
+    if (event.target.file) {
+      setInputProductos({
+        ...inputProductos,
+        [event.target.name]: event.target.file[0],
+      });
+    }
     setInputProductos({
       ...inputProductos,
       [event.target.name]: event.target.value,
     });
+    // formData.append(event.target.name, event.target.value);
+
     console.log(inputProductos);
   };
 
-  console.log(user, user.user.id_admin);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const id = seleccion.id_producto;
-    // console.log(usuario, user);
-    const borrar = await axios
-      .post(`http://localhost:4000/api/producto/create`, inputProductos)
+    formData.append("nombre", inputProductos.nombre);
+    formData.append("descripcion", inputProductos.descripcion);
+    formData.append("precio", inputProductos.precio);
+    formData.append("stock", inputProductos.stock);
+    formData.append("imagen", inputProductos.imagen);
+    // console.log(formData.get("nombre"), formData.get("descripcion"));
+    const agregar = await axios
+      .post(`${API_URL}/api/producto/create`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then(
         (response) => {
           if (response.status === 200) {
-            // props.cargar.setRespuesta(false);
             setOpen(false);
-            // console.log(user.id_admin);
             history.push(`/admin/productos/${user.user.id_admin}`);
           }
-          console.log(response);
         },
         (error) => {
           console.log(error);
         }
       );
   };
-
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -103,7 +109,11 @@ export default function BotonAgregar(props) {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <form action="" onSubmit={handleSubmit}>
+                <form
+                  action=""
+                  onSubmit={handleSubmit}
+                  enctype="multipart/form-data"
+                >
                   <Dialog.Title
                     as="h3"
                     className="p-4 text-lg leading-6 font-medium text-white bg-black flex justify-between"
@@ -124,7 +134,6 @@ export default function BotonAgregar(props) {
                                     name="nombre"
                                     onChange={handleInput}
                                     className="my-1 md:mx-6 py-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    defaultValue={seleccion.nombre}
                                   />
                                 </td>
                               </tr>
@@ -136,7 +145,6 @@ export default function BotonAgregar(props) {
                                     name="descripcion"
                                     onChange={handleInput}
                                     className="py-1 my-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    defaultValue={seleccion.descripcion}
                                   />
                                 </td>
                               </tr>
@@ -148,7 +156,6 @@ export default function BotonAgregar(props) {
                                     name="precio"
                                     onChange={handleInput}
                                     className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    defaultValue={seleccion.precio}
                                   />
                                 </td>
                               </tr>
@@ -160,7 +167,19 @@ export default function BotonAgregar(props) {
                                     name="stock"
                                     onChange={handleInput}
                                     className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    defaultValue={seleccion.stock}
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="text-sm">Imagen</td>
+                                <td>
+                                  <input
+                                    type="file"
+                                    name="imagen"
+                                    accept="image/png, image/jpeg"
+                                    onChange={handleInput}
+                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    // defaultValue={seleccion.categoria}
                                   />
                                 </td>
                               </tr>

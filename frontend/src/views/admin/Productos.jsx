@@ -36,7 +36,6 @@ const Productos = () => {
   };
   useEffect(() => {
     getProductos();
-    // console.log(productos);
   }, [location]);
 
   return (
@@ -60,42 +59,7 @@ const Productos = () => {
                 </div>
               </div>
             </div>
-            <div className="block w-full overflow-x-auto">
-              <table className="items-center w-full bg-transparent border-collapse">
-                <thead>
-                  <tr className="bg-blueGray-200 w-full">
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                      Imagen
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                      Nombre
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                      Disponible
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                      Categoria
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                      Tipo
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                      Precio
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                      Stock
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                      Descripcion
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                      Acciones
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>{cargando}</tbody>
-              </table>
-            </div>
+            {cargando}
           </div>
         </div>
       </div>

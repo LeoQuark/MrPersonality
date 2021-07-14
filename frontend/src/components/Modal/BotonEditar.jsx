@@ -4,6 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
+import { API_URL } from "../../utils/api-data";
 
 export default function BotonEditar(props) {
   const { user } = useContext(UserContext);
@@ -33,7 +34,7 @@ export default function BotonEditar(props) {
     const id = seleccion.id_producto;
     console.log(usuario, user);
     const update = await axios
-      .put(`http://localhost:4000/api/producto/update/${id}`, inputProductos)
+      .put(`${API_URL}/api/producto/update/${id}`, inputProductos)
       .then(
         (response) => {
           console.log(response);

@@ -5,12 +5,10 @@ export const createAdmin = async (req, res) => {
   // Obtengo los valores del formulario (req.body)
   const { nombre, correo, password } = req.body;
   try {
-
     //Encriptar la contraseña
     const saltos = bcryptjs.genSaltSync();
     const passEncrypted = bcryptjs.hashSync(password, saltos);
 
-    //falta encriptar la contraseña del usuario/admin
     const crearAdmin = await Pool.query(
       "INSERT INTO admin (nombre,correo,password) VALUES ($1,$2,$3)",
       [nombre, correo, passEncrypted]

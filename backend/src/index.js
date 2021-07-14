@@ -2,9 +2,9 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
-
+import path from "path";
 //Rutas
-import authRoutes from './routes/auth'
+import authRoutes from "./routes/auth";
 import adminRoutes from "./routes/admin";
 import productRoutes from "./routes/producto";
 import proveedorRoutes from "./routes/proveedor";
@@ -16,9 +16,11 @@ import categoriaRoutes from "./routes/categoria";
 dotenv.config();
 
 //Iniciamos express
-export const app = express();
+const app = express();
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "uploads/")));
 
-//Middlewares
+//Middlewares}
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -26,7 +28,7 @@ app.use(express.json());
 app.use(cors());
 
 //Ruta inicial de la API
-app.use('/api/auth', authRoutes)
+app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/producto", productRoutes);
 app.use("/api/proveedor", proveedorRoutes);

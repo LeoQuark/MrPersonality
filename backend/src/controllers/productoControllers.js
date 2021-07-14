@@ -1,14 +1,21 @@
 import Pool from "../database/connection";
+import path from "path";
+import fs from "fs-extra";
 
 // Funcion para crear productos
 export const createProduct = async (req, res) => {
   const { nombre, descripcion, precio, stock, id_admin } = req.body;
+  //El objeto entregado por req.file contine toda la info del archivo subido (fieldname,originalname,encoding,mimetype,des tination,size,path,etc)
+  const { path } = req.file;
   try {
-    const consulta = await Pool.query(
-      "INSERT INTO producto (nombre, descripcion,precio,stock,id_admin) VALUES ($1,$2,$3,$4,$5)",
-      [nombre, descripcion, precio, stock, id_admin]
-    );
+    // console.log(path);
+    //EN LA BASE DE DATOS SOLO HAY QUE GUARDAR LA RUTA DEL ARCHIVO, SOLO EL PATH
 
+    const consulta = await Pool.query(
+      "INSERT INTO producto (nombre, descripcion, precio, imagen, stock, id_admin) VALUES ($1,$2,$3,$4,$5,$6)",
+      [nombre, descripcion, precio, path, stock, id_admin]
+    );
+    // const consulta = true;
     if (consulta) {
       res.status(200).json({
         msg: `producto creado correctamente`,
@@ -81,12 +88,18 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const consultaNombre = await Pool.query(
-      "SELECT nombre FROM producto WHERE id_producto=$1",
+    const consultaProducto = await Pool.query(
+      "SELECT * FROM producto WHERE id_producto=$1",
       [id]
     );
 
-    // console.log(consultaNombre.rows[0].nombre);
+    const producto = consultaProducto.rows[0];
+
+    //Eliminar la imagen del producto de nuestro backend
+    if (producto.imagen) {
+      await fs.unlink(path.resolve(producto.imagen));
+    }
+
     const consulta = await Pool.query(
       "DELETE FROM producto WHERE id_producto=$1",
       [id]
@@ -94,7 +107,7 @@ export const deleteProduct = async (req, res) => {
 
     if (consulta) {
       res.status(200).json({
-        msg: `El producto ${consultaNombre.rows[0].nombre} ha sido eliminado de la BD.`,
+        msg: `El producto ${producto.nombre} ha sido eliminado de la BD.`,
       });
     }
   } catch (error) {

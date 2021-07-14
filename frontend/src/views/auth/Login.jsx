@@ -37,14 +37,14 @@ export default function Login() {
       .post(`http://localhost:4000/api/auth/login`, userData)
       .then(
         (response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             setErrorSubmit(false);
             // console.log(response.status);
-            console.log(response);
+            // console.log(response);
             const token = response.data.token;
             const user = JSON.stringify(response.data.user);
             setUser(JSON.parse(user));
-            console.log("user", user);
+            // console.log("user", user);
             setUserSessionStorage(token, user);
             history.push(`/admin/${response.data.user.id_admin}`);
           } else {
@@ -71,7 +71,13 @@ export default function Login() {
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <div className="text-blueGray-400 text-center mb-3 font-bold">
-                  <h3 className="text-blueGray-600 mr-0 inline-block whitespace-nowrap text-lg uppercase font-bold p-4 px-0 my-10 tracking-widestMore ">
+                  <div className="flex justify-center">
+                    <img
+                      src={require("assets/img/logo-mrpersonality.png").default}
+                      className="h-3/4 w-3/4"
+                    />
+                  </div>
+                  <h3 className="text-blueGray-600 mr-0 inline-block whitespace-nowrap text-lg uppercase font-bold p-4 px-0 tracking-widestMore ">
                     Mr Personality
                   </h3>
                 </div>
@@ -135,18 +141,6 @@ export default function Login() {
                       </div>
                     </div>
                   )}
-                  {/* <div>
-                    <label className="inline-flex items-center cursor-pointer">
-                      <input
-                        id="customCheckLogin"
-                        type="checkbox"
-                        className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                      />
-                      <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                        Recordar contraseña
-                      </span>
-                    </label>
-                  </div> */}
                   <div className="text-center mt-8">
                     <button
                       className="bg-black text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
@@ -159,15 +153,6 @@ export default function Login() {
               </div>
             </div>
             <div className="flex mt-6 relative justify-end">
-              {/* <div className="w-1/2">
-                <a
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  className="text-blueGray-200"
-                >
-                  <small>Forgot password?</small>
-                </a>
-              </div> */}
               <div className="">
                 <Link to="/auth/register" className="text-blueGray-200">
                   <small>Crear una nueva cuenta</small>
