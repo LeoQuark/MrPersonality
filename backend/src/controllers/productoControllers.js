@@ -2,6 +2,7 @@ import Pool from "../database/connection";
 import path from "path";
 import fs from "fs-extra";
 
+
 // Funcion para crear productos
 export const createProduct = async (req, res) => {
   const { nombre, descripcion, precio, stock, id_admin } = req.body;
@@ -48,7 +49,7 @@ export const getProductById = async (req, res) => {
   const { id } = req.params;
   try {
     const consulta = await Pool.query(
-      "SELECT * FROM producto WHERE id_producto = $1",
+      "SELECT * FROM producto JOIN categoria on producto.id_categoria = categoria.id_categoria JOIN talla on producto.id_talla = talla.id_talla JOIN color on producto.id_color = color.id_color JOIN tipo on producto.id_tipo = tipo.id_tipo WHERE id_producto = $1",
       [id]
     );
 

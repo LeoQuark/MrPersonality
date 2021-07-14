@@ -41,7 +41,7 @@ export const getClienteById = async (req, res) => {
   const { id } = req.params;
   try {
     const consulta = await Pool.query(
-      "SELECT * FROM cliente WHERE id_cliente = $1",
+      "SELECT * cliente x JOIN comuna y on x.id_comuna = y.id_comuna JOIN ciudad z on x.id_ciudad = z.id_ciudad WHERE id_cliente = $1",
       [id]
     );
 
