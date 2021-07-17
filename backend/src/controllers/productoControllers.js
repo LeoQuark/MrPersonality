@@ -21,64 +21,29 @@ export const createProduct = async (req, res) => {
   //El objeto entregado por req.file contine toda la info del archivo subido (fieldname,originalname,encoding,mimetype,des tination,size,path,etc)
   const { path } = req.file;
   try {
-    console.log(path);
+    // console.log(path);
     //EN LA BASE DE DATOS SOLO HAY QUE GUARDAR LA RUTA DEL ARCHIVO, SOLO EL PATH
 
     //insertar y consultar id/ categoria, talla, color, tipo
-    const id_categoria = await Pool.query(
+    const test = await Pool.query(
       "INSERT INTO categoria (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING RETURNING id_categoria",
       [categoria]
     );
-<<<<<<< HEAD
-    console.log(id_categoria.rows[0].id_categoria);
-    //insertar y consultar talla
-    const in_talla = await Pool.query(
-      "INSERT INTO talla (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
-      [talla]
+    const prueba = await Pool.query(
+      "SELECT id_categoria FROM categoria WHERE nombre=$1",
+      [categoria]
     );
-    const id_talla = await Pool.query(
-      "SELECT id_talla FROM talla WHERE nombre=$1",
-=======
+    console.log(prueba);
+    console.log(test);
     const id_talla = await Pool.query(
       "INSERT INTO talla (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING RETURNING id_talla",
->>>>>>> cc135b6dd6641da39bb0e83105ba07b0fcb6831d
       [talla]
     );
     const id_color = await Pool.query(
-<<<<<<< HEAD
-      "SELECT id_color FROM color WHERE nombre=$1",
-=======
       "INSERT INTO color (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING RETURNING id_color",
->>>>>>> cc135b6dd6641da39bb0e83105ba07b0fcb6831d
       [color]
     );
     const id_tipo = await Pool.query(
-<<<<<<< HEAD
-      "SELECT id_tipo FROM tipo WHERE nombre=$1",
-      [tipo]
-    );
-    // const consulta = await Pool.query(
-    //   "INSERT INTO producto (nombre, descripcion, stock, empaque, intereses_tarjeta, ffee_traslado, precio, imagen, id_categoria, id_talla, id_color, id_tipo, id_admin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
-    //   [
-    //     nombre,
-    //     descripcion,
-    //     stock,
-    //     empaque,
-    //     intereses,
-    //     ffee,
-    //     precio,
-    //     path,
-    //     id_categoria,
-    //     id_talla,
-    //     id_color,
-    //     id_tipo,
-    //     id_admin,
-    //   ]
-    // );
-    const consulta = true;
-    console.log(consulta);
-
-=======
       "INSERT INTO tipo (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING RETURNING id_tipo",
       [tipo]
     );
@@ -86,10 +51,23 @@ export const createProduct = async (req, res) => {
     //agregar el producto
     const consulta = await Pool.query(
       "INSERT INTO producto (nombre, descripcion, stock, empaque, intereses_tarjeta, ffee_traslado, precio, imagen, id_categoria, id_talla, id_color, id_tipo, id_admin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
-      [nombre, descripcion, stock, empaque, intereses, ffee, precio, path, id_categoria.rows[0].id_categoria, id_talla.rows[0].id_talla, id_color.rows[0].id_color, id_tipo.rows[0].id_tipo, id_admin]
+      [
+        nombre,
+        descripcion,
+        stock,
+        empaque,
+        intereses,
+        ffee,
+        precio,
+        path,
+        id_categoria.rows[0].id_categoria,
+        id_talla.rows[0].id_talla,
+        id_color.rows[0].id_color,
+        id_tipo.rows[0].id_tipo,
+        id_admin,
+      ]
     );
     // const consulta = true;
->>>>>>> cc135b6dd6641da39bb0e83105ba07b0fcb6831d
     if (consulta) {
       res.status(200).json({
         msg: `producto creado correctamente`,
@@ -104,7 +82,9 @@ export const createProduct = async (req, res) => {
 // Funcion para obtener todos los productos
 export const getAllProduct = async (req, res) => {
   try {
-    const consulta = await Pool.query("SELECT producto.id_producto AS id_producto, producto.nombre AS nombre, producto.descripcion AS descripcion, producto.stock AS stock, producto.empaque AS empaque, producto.intereses_tarjeta AS intereses_tarjeta, producto.ffee_traslado AS ffee_traslado, (producto.precio - (detalle_abastece.costo_unitario) - producto.empaque - producto.intereses_tarjeta - producto.ffee_traslado ) AS Margen, (producto.precio) AS rentabilidad, producto.precio AS precio, producto.imagen AS imagen FROM producto JOIN categoria on producto.id_categoria = categoria.id_categoria JOIN talla on producto.id_talla = talla.id_talla JOIN color on producto.id_color = color.id_color JOIN tipo on producto.id_tipo = tipo.id_tipo JOIN detalle_abastece on producto.id_producto = detalle_abastece.id_producto");
+    const consulta = await Pool.query(
+      "SELECT producto.id_producto AS id_producto, producto.nombre AS nombre, producto.descripcion AS descripcion, producto.stock AS stock, producto.empaque AS empaque, producto.intereses_tarjeta AS intereses_tarjeta, producto.ffee_traslado AS ffee_traslado, (producto.precio - (detalle_abastece.costo_unitario) - producto.empaque - producto.intereses_tarjeta - producto.ffee_traslado ) AS Margen, (producto.precio) AS rentabilidad, producto.precio AS precio, producto.imagen AS imagen FROM producto JOIN categoria on producto.id_categoria = categoria.id_categoria JOIN talla on producto.id_talla = talla.id_talla JOIN color on producto.id_color = color.id_color JOIN tipo on producto.id_tipo = tipo.id_tipo JOIN detalle_abastece on producto.id_producto = detalle_abastece.id_producto"
+    );
     // console.log(consulta.rows);
     if (consulta.rows) {
       res.status(200).json({
