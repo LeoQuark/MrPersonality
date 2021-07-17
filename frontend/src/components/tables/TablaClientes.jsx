@@ -4,6 +4,7 @@ import UserContext from "../../context/UserContext";
 //components
 import BotonEditar from "../Modal/BotonEditar";
 import BotonEliminar from "../Modal/BotonEliminar";
+import BotonInfo from "../Modal/BotonInfo";
 
 const TablaClientes = (props) => {
   const clientes = props.clientes;
@@ -34,8 +35,9 @@ const TablaClientes = (props) => {
           </td>
           <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
             <div className="flex justify-between w-100">
+              <BotonInfo info={cliente} />
               <BotonEditar cliente={cliente} />
-              <BotonEliminar cliente={cliente} />
+              <BotonEliminar info={cliente} tipo={"cliente"} />
             </div>
           </td>
         </tr>

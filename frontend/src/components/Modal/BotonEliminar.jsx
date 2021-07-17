@@ -1,65 +1,41 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef, useState, useEffect, useContext } from "react";
+import { Fragment, useRef, useState, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import { API_URL } from "../../utils/api-data";
 
-export default function BotonEliminars(props) {
+export default function BotonEliminars({ info, tipo }) {
   const { user } = useContext(UserContext);
   const history = useHistory();
-  const { producto } = props;
   const [open, setOpen] = useState(false);
-  const [seleccion, setSeleccion] = useState({});
-  const [usuario, setUsuario] = useState({});
-  const [inputProductos, setInputProductos] = useState({});
 
   const cancelButtonRef = useRef(null);
-  const seleccionarProducto = (elemento) => {
-    setSeleccion(elemento);
-    setOpen(true);
-  };
 
-  const handleInput = (event) => {
-    event.preventDefault();
-    setInputProductos({
-      ...inputProductos,
-      [event.target.name]: event.target.value,
-    });
-    console.log(inputProductos);
-  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const id = seleccion.id_producto;
-    // console.log(usuario, user);
-    const borrar = await axios
-      .delete(`${API_URL}/api/producto/delete/${id}`)
-      .then(
-        (response) => {
-          console.log(response);
-          if (response.status === 200) {
-            // console.log("yes");
-            setOpen(false);
-            history.push(`/admin/productos/${user.user.id_admin}`);
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  };
+    const id = info[`id_${tipo}`];
 
-  useEffect(() => {
-    setUsuario(user);
-  }, []);
+    await axios.delete(`${API_URL}/api/${tipo}/delete/${id}`).then(
+      (response) => {
+        if (response.status === 200) {
+          setOpen(false);
+          history.push(`/admin/${tipo}s/${user.user.id_admin}`);
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
 
   return (
     <>
       <button
         type="button"
-        className="mr-2 p-2 bg-red-500 font-bold text-white rounded shadow-md"
-        onClick={() => seleccionarProducto(producto)}
+        className="mx-1 p-2 bg-red-500 font-bold text-white rounded shadow-md"
+        onClick={() => setOpen(true)}
       >
         Eliminar
       </button>
@@ -107,14 +83,14 @@ export default function BotonEliminars(props) {
                     as="h3"
                     className="p-4 text-lg leading-6 font-medium text-white bg-black flex justify-between"
                   >
-                    <div>{`Eliminar el producto - ${seleccion.nombre}`}</div>
-                    <div>{`id : ${seleccion.id_producto}`}</div>
+                    <div>{`Eliminar el producto - ${info.nombre}`}</div>
+                    <div>{`id : ${info[`id_${tipo}`]}`}</div>
                   </Dialog.Title>
                   <div className="bg-white px-4 pt-4 pb-2 sm:p-4">
                     <div className="sm:flex sm:items-start">
                       <div className="text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <div className="my-4">
-                          {`Estás a punto de eliminar el producto "${seleccion.nombre}" de la base de datos\n¿Deseas eliminar el producto?`}
+                          {`Estás a punto de eliminar el producto "${info.nombre}" de la base de datos\n¿Deseas eliminar el producto?`}
                         </div>
                       </div>
                     </div>

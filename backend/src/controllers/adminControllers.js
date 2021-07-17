@@ -31,14 +31,16 @@ export const createAdmin = async (req, res) => {
 export const getAdmin = async (req, res) => {
   const { id } = req.params;
   try {
-    const obtenerAdmin = await Pool.query(
+    const consulta = await Pool.query(
       "SELECT * FROM admin WHERE id_admin = $1",
       [id]
     );
+    const { password, ...user } = consulta.rows[0];
 
-    if (obtenerAdmin) {
+    // console.log(user);
+    if (consulta) {
       res.status(200).json({
-        data: obtenerAdmin.rows,
+        data: user,
       });
     }
   } catch (error) {
@@ -66,13 +68,14 @@ export const getAllAdmin = async (req, res) => {
 // Funcion que actuliza la información del admin a partir de su id
 export const updateAdmin = async (req, res) => {
   const { id } = req.params;
-  const { nombre, correo, password, imagen } = req.body;
+  const { nombre, correo } = req.body;
+  const { path } = req.file;
   try {
     const consulta = await Pool.query(
-      "UPDATE admin SET nombre=$1, correo=$2, password=$3, imagen=$4 WHERE id_admin=$5",
-      [nombre, correo, password, imagen, id]
+      "UPDATE admin SET nombre=$1, correo=$2, imagen=$3 WHERE id_admin=$4",
+      [nombre, correo, path, id]
     );
-    console.log(consulta);
+    // console.log(consulta);
 
     if (consulta) {
       res.status(200).json({

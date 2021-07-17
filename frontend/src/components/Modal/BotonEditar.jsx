@@ -57,7 +57,7 @@ export default function BotonEditar(props) {
     <>
       <button
         type="button"
-        className="mr-2 p-2 bg-blue-500 font-bold text-white rounded shadow-md"
+        className="mx-1 p-2 bg-blue-500 font-bold text-white rounded shadow-md"
         onClick={() => seleccionarProducto(producto)}
       >
         Editar
@@ -106,7 +106,7 @@ export default function BotonEditar(props) {
                     as="h3"
                     className="p-4 text-lg leading-6 font-medium text-white bg-black flex justify-between"
                   >
-                    <div>{`Información del producto - ${seleccion.nombre}`}</div>
+                    <div>{`Producto - ${seleccion.nombre}`}</div>
                     <div>{`id : ${seleccion.id_producto}`}</div>
                   </Dialog.Title>
                   <div className="bg-white px-4 pt-4 pb-2 sm:p-4">

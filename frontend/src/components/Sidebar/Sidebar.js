@@ -1,15 +1,19 @@
 /*eslint-disable*/
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 
 export default function Sidebar(props) {
   const user = props.user;
-  // console.log(user.id_admin);
+  const [collapseShow, setCollapseShow] = useState("hidden");
+  const location = useLocation();
 
-  const [collapseShow, setCollapseShow] = React.useState("hidden");
+  useEffect(() => {
+    setCollapseShow("hidden");
+  }, [location]);
+
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-4">

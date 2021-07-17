@@ -2,14 +2,15 @@ import Pool from "../database/connection";
 import path from "path";
 import fs from "fs-extra";
 
-
 // Funcion para crear productos
 export const createProduct = async (req, res) => {
   const { nombre, descripcion, precio, stock, id_admin } = req.body;
   //El objeto entregado por req.file contine toda la info del archivo subido (fieldname,originalname,encoding,mimetype,des tination,size,path,etc)
+  // console.log("file", req.file);
+  // console.log(nombre, descripcion);
   const { path } = req.file;
   try {
-    // console.log(path);
+    console.log(path);
     //EN LA BASE DE DATOS SOLO HAY QUE GUARDAR LA RUTA DEL ARCHIVO, SOLO EL PATH
 
     const consulta = await Pool.query(

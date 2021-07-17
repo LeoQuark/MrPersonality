@@ -7,7 +7,7 @@ import { SET_USER } from "./types";
 */
 export default (state, action) => {
   const { payload, type } = action;
-  console.log("payload", payload);
+  // console.log("payload", payload);
   switch (type) {
     case SET_USER:
       return {

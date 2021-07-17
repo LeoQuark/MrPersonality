@@ -6,6 +6,7 @@ import {
   removeUserSessionStorage,
 } from "../../utils/sessionStorage";
 import UserContext from "../../context/UserContext";
+import { API_URL } from "../../utils/api-data";
 
 export default function Login() {
   const { setUser } = useContext(UserContext);
@@ -33,30 +34,28 @@ export default function Login() {
     event.preventDefault();
     // console.log(userData);
 
-    const submit = await axios
-      .post(`http://localhost:4000/api/auth/login`, userData)
-      .then(
-        (response) => {
-          if (response.status === 200) {
-            setErrorSubmit(false);
-            // console.log(response.status);
-            // console.log(response);
-            const token = response.data.token;
-            const user = JSON.stringify(response.data.user);
-            setUser(JSON.parse(user));
-            // console.log("user", user);
-            setUserSessionStorage(token, user);
-            history.push(`/admin/${response.data.user.id_admin}`);
-          } else {
-            console.log("object");
-          }
-        },
-        (error) => {
-          console.log();
-          console.log(error);
-          setErrorSubmit(true);
+    const submit = await axios.post(`${API_URL}/api/auth/login`, userData).then(
+      (response) => {
+        if (response.status === 200) {
+          setErrorSubmit(false);
+          // console.log(response.status);
+          // console.log(response);
+          const token = response.data.token;
+          const user = JSON.stringify(response.data.user);
+          setUser(JSON.parse(user));
+          // console.log("user", user);
+          setUserSessionStorage(token, user);
+          history.push(`/admin/${response.data.user.id_admin}`);
+        } else {
+          console.log("object");
         }
-      );
+      },
+      (error) => {
+        console.log();
+        console.log(error);
+        setErrorSubmit(true);
+      }
+    );
   };
 
   useEffect(() => {

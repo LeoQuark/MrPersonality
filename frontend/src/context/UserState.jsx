@@ -16,7 +16,7 @@ export const UserState = (props) => {
   const [user, dispatch] = useReducer(UserReducer, { user: {} });
 
   const setUser = (datos) => {
-    console.log(datos);
+    // console.log(datos);
     dispatch({
       type: "SET_USER",
       payload: datos,
@@ -27,7 +27,7 @@ export const UserState = (props) => {
   return (
     <UserContext.Provider
       value={{
-        user: user,
+        user,
         setUser,
       }}
     >

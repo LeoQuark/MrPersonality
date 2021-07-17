@@ -12,8 +12,8 @@ export default function HeaderStats() {
   return (
     <>
       {/* Header */}
-      <div className="relative bg-black md:pt-24 pb-32 pt-12">
-        <div className="px-4 md:px-10 mx-auto w-full">
+      <div className="relative bg-black sm:pt-24 pb-32">
+        <div className="px-4 hidden sm:block  md:px-10 mx-auto w-full">
           <div>
             {/* Card stats */}
             <div className="flex flex-wrap">

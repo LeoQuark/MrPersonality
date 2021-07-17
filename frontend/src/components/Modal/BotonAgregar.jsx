@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
@@ -13,25 +12,19 @@ export default function BotonAgregar(props) {
 
   const [open, setOpen] = useState(false);
   const [inputProductos, setInputProductos] = useState({});
+  const [fileData, setFileData] = useState({});
 
   const cancelButtonRef = useRef(null);
 
   const handleInput = (event) => {
     event.preventDefault();
-    // setInputProductos({ ...inputProductos, id_admin: user.id_admin });
-    if (event.target.file) {
-      setInputProductos({
-        ...inputProductos,
-        [event.target.name]: event.target.file[0],
-      });
+    if (event.target.name === "imagen") {
+      setFileData(event.target.files[0]);
     }
     setInputProductos({
       ...inputProductos,
       [event.target.name]: event.target.value,
     });
-    // formData.append(event.target.name, event.target.value);
-
-    console.log(inputProductos);
   };
 
   const handleSubmit = async (event) => {
@@ -40,9 +33,8 @@ export default function BotonAgregar(props) {
     formData.append("descripcion", inputProductos.descripcion);
     formData.append("precio", inputProductos.precio);
     formData.append("stock", inputProductos.stock);
-    formData.append("imagen", inputProductos.imagen);
-    // console.log(formData.get("nombre"), formData.get("descripcion"));
-    const agregar = await axios
+    formData.append("imagen", fileData);
+    await axios
       .post(`${API_URL}/api/producto/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
