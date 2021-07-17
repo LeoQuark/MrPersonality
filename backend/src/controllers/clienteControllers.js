@@ -4,27 +4,19 @@ import Pool from "../database/connection";
 export const createCliente = async (req, res) => {
   const { nombre, correo, direccion, telefono, user_instagram, comuna, region} = req.body;
   try {
-    //insertar y consultar comuna
-    const in_comuna = await Pool.query(
-      "INSERT INTO comuna (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
-      [comuna]
-    );
+    //insertar y consultar comuna, region
     const id_comuna = await Pool.query(
-      "SELECT id_comuna FROM comuna WHERE nombre=$1",
+      "INSERT INTO comuna (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING RETURNING id_comuna",
       [comuna]
-    );
-    //insertar y consultar region
-    const in_region = await Pool.query(
-      "INSERT INTO regio (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
-      [region]
     );
     const id_region = await Pool.query(
-      "SELECT id_region FROM region WHERE nombre=$1",
+      "INSERT INTO region (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING RETURNIN id_region",
       [region]
     );
+
     const consulta = await Pool.query(
       "INSERT INTO cliente (nombre, correo, direccion, telefono) VALUES ($1,$2,$3,$4)",
-      [nombre, correo, direccion, telefono, user_instagram, id_comuna,]
+      [nombre, correo, direccion, telefono, user_instagram, id_comuna.rows[0].id_comuna, id_region.rows[0].id_region]
     );
 
     if (consulta) {

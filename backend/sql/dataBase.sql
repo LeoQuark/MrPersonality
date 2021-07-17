@@ -101,8 +101,9 @@ CREATE TABLE IF NOT EXISTS Cliente(
     correo text,
     direccion text,
     telefono text,
+    user_isntagram text,
     id_comuna integer REFERENCES Comuna(id_comuna),
-    id_ciudad integer REFERENCES Ciudad(id_ciudad)
+    id_region integer REFERENCES Region(id_region)
 );
 
 -- tablas para las compras
