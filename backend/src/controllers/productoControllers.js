@@ -4,10 +4,21 @@ import fs from "fs-extra";
 
 // Funcion para crear productos
 export const createProduct = async (req, res) => {
-  const {nombre, descripcion, stock, empaque, intereses, ffee, precio, categoria, talla, color, tipo, id_admin} = req.body;
+  const {
+    nombre,
+    descripcion,
+    stock,
+    empaque,
+    intereses,
+    ffee,
+    precio,
+    categoria,
+    talla,
+    color,
+    tipo,
+    id_admin,
+  } = req.body;
   //El objeto entregado por req.file contine toda la info del archivo subido (fieldname,originalname,encoding,mimetype,des tination,size,path,etc)
-  // console.log("file", req.file);
-  // console.log(nombre, descripcion);
   const { path } = req.file;
   try {
     console.log(path);
@@ -22,13 +33,14 @@ export const createProduct = async (req, res) => {
       "SELECT id_categoria FROM categoria WHERE nombre=$1",
       [categoria]
     );
+    console.log(id_categoria.rows[0].id_categoria);
     //insertar y consultar talla
     const in_talla = await Pool.query(
       "INSERT INTO talla (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
       [talla]
     );
     const id_talla = await Pool.query(
-      "SELECT id_talla FROM categoria WHERE nombre=$1",
+      "SELECT id_talla FROM talla WHERE nombre=$1",
       [talla]
     );
     ////insertar y consultar color
@@ -37,7 +49,7 @@ export const createProduct = async (req, res) => {
       [color]
     );
     const id_color = await Pool.query(
-      "SELECT id_color FROM categoria WHERE nombre=$1",
+      "SELECT id_color FROM color WHERE nombre=$1",
       [color]
     );
     //insertar y consultar tipo
@@ -46,14 +58,30 @@ export const createProduct = async (req, res) => {
       [tipo]
     );
     const id_tipo = await Pool.query(
-      "SELECT id_categoria FROM categoria WHERE nombre=$1",
+      "SELECT id_tipo FROM tipo WHERE nombre=$1",
       [tipo]
     );
-    const consulta = await Pool.query(
-      "INSERT INTO producto (nombre, descripcion, stock, empaque, intereses_tarjeta, ffee_traslado, precio, imagen, id_categoria, id_talla, id_color, id_tipo, id_admin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
-      [nombre, descripcion, stock, empaque, intereses, ffee, precio, path, id_categoria, id_talla, id_color, id_tipo, id_admin]
-    );
-    // const consulta = true;
+    // const consulta = await Pool.query(
+    //   "INSERT INTO producto (nombre, descripcion, stock, empaque, intereses_tarjeta, ffee_traslado, precio, imagen, id_categoria, id_talla, id_color, id_tipo, id_admin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
+    //   [
+    //     nombre,
+    //     descripcion,
+    //     stock,
+    //     empaque,
+    //     intereses,
+    //     ffee,
+    //     precio,
+    //     path,
+    //     id_categoria,
+    //     id_talla,
+    //     id_color,
+    //     id_tipo,
+    //     id_admin,
+    //   ]
+    // );
+    const consulta = true;
+    console.log(consulta);
+
     if (consulta) {
       res.status(200).json({
         msg: `producto creado correctamente`,
