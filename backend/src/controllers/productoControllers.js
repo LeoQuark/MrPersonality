@@ -5,16 +5,52 @@ import fs from "fs-extra";
 
 // Funcion para crear productos
 export const createProduct = async (req, res) => {
-  const { nombre, descripcion, precio, stock, id_admin } = req.body;
+  const {nombre, descripcion, stock, empaque, intereses, ffee, precio, categoria, talla, color, tipo, id_admin} = req.body;
   //El objeto entregado por req.file contine toda la info del archivo subido (fieldname,originalname,encoding,mimetype,des tination,size,path,etc)
   const { path } = req.file;
   try {
     // console.log(path);
     //EN LA BASE DE DATOS SOLO HAY QUE GUARDAR LA RUTA DEL ARCHIVO, SOLO EL PATH
 
+    //insertar y consultar categoria
+    const in_categoria = await Pool.query(
+      "INSERT INTO categoria (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      [categoria]
+    );
+    const id_categoria = await Pool.query(
+      "SELECT id_categoria FROM categoria WHERE nombre=$1",
+      [categoria]
+    );
+    //insertar y consultar talla
+    const in_talla = await Pool.query(
+      "INSERT INTO talla (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      [talla]
+    );
+    const id_talla = await Pool.query(
+      "SELECT id_talla FROM categoria WHERE nombre=$1",
+      [talla]
+    );
+    ////insertar y consultar color
+    const in_color = await Pool.query(
+      "INSERT INTO color (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      [color]
+    );
+    const id_color = await Pool.query(
+      "SELECT id_color FROM categoria WHERE nombre=$1",
+      [color]
+    );
+    //insertar y consultar tipo
+    const in_tipo = await Pool.query(
+      "INSERT INTO tipo (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      [tipo]
+    );
+    const id_tipo = await Pool.query(
+      "SELECT id_categoria FROM categoria WHERE nombre=$1",
+      [tipo]
+    );
     const consulta = await Pool.query(
-      "INSERT INTO producto (nombre, descripcion, precio, imagen, stock, id_admin) VALUES ($1,$2,$3,$4,$5,$6)",
-      [nombre, descripcion, precio, path, stock, id_admin]
+      "INSERT INTO producto (nombre, descripcion, stock, empaque, intereses_tarjeta, ffee_traslado, precio, imagen, id_categoria, id_talla, id_color, id_tipo, id_admin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
+      [nombre, descripcion, stock, empaque, intereses, ffee, precio, path, id_categoria, id_talla, id_color, id_tipo, id_admin]
     );
     // const consulta = true;
     if (consulta) {
