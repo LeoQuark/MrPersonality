@@ -163,6 +163,83 @@ export default function BotonAgregar(props) {
                                 </td>
                               </tr>
                               <tr>
+                                <td className="text-sm">Empaque</td>
+                                <td>
+                                  <input
+                                    type="text"
+                                    name="empaque"
+                                    onChange={handleInput}
+                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="text-sm">Intereses</td>
+                                <td>
+                                  <input
+                                    type="text"
+                                    name="intereses"
+                                    onChange={handleInput}
+                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="text-sm">FF.EE</td>
+                                <td>
+                                  <input
+                                    type="text"
+                                    name="ffee"
+                                    onChange={handleInput}
+                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="text-sm">Categoria</td>
+                                <td>
+                                  <input
+                                    type="text"
+                                    name="categoria"
+                                    onChange={handleInput}
+                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="text-sm">Talla</td>
+                                <td>
+                                  <input
+                                    type="text"
+                                    name="talla"
+                                    onChange={handleInput}
+                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="text-sm">Color</td>
+                                <td>
+                                  <input
+                                    type="text"
+                                    name="color"
+                                    onChange={handleInput}
+                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="text-sm">Tipo</td>
+                                <td>
+                                  <input
+                                    type="text"
+                                    name="tipo"
+                                    onChange={handleInput}
+                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
                                 <td className="text-sm">Imagen</td>
                                 <td>
                                   <input

@@ -29,7 +29,7 @@ export default function Sidebar(props) {
           {/* Brand */}
           <Link
             className="md:block text-blueGray-400 mr-0 inline-block whitespace-nowrap text-sm uppercase px-0 text-center tracking-widestMore"
-            to="/admin"
+            to={`/admin/dashboard/${user.id_admin}`}
           >
             Bienvenido
           </Link>

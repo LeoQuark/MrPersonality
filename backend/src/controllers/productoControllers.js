@@ -21,30 +21,44 @@ export const createProduct = async (req, res) => {
   //El objeto entregado por req.file contine toda la info del archivo subido (fieldname,originalname,encoding,mimetype,des tination,size,path,etc)
   const { path } = req.file;
   try {
-    // console.log(path);
-    //EN LA BASE DE DATOS SOLO HAY QUE GUARDAR LA RUTA DEL ARCHIVO, SOLO EL PATH
-
-    //insertar y consultar id/ categoria, talla, color, tipo
-    const test = await Pool.query(
-      "INSERT INTO categoria (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING RETURNING id_categoria",
+    //insertar categoria
+    const insert_categoria = await Pool.query(
+      "INSERT INTO categoria (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
       [categoria]
     );
-    const prueba = await Pool.query(
+    //Obtener el id_categoria del dato ingresado
+    const id_categoria = await Pool.query(
       "SELECT id_categoria FROM categoria WHERE nombre=$1",
       [categoria]
     );
-    console.log(prueba);
-    console.log(test);
-    const id_talla = await Pool.query(
-      "INSERT INTO talla (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING RETURNING id_talla",
+    //insert talla
+    const insert_talla = await Pool.query(
+      "INSERT INTO talla (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
       [talla]
     );
-    const id_color = await Pool.query(
-      "INSERT INTO color (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING RETURNING id_color",
+    //obtener el id_talla del dato ingresado
+    const id_talla = await Pool.query(
+      "SELECT id_talla FROM talla WHERE nombre=$1",
+      [talla]
+    );
+    //insert color
+    const insert_color = await Pool.query(
+      "INSERT INTO color (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
       [color]
     );
+    //Obtener id_color
+    const id_color = await Pool.query(
+      "SELECT id_color FROM color WHERE nombre=$1",
+      [color]
+    );
+    //insert tipo
+    const insert_tipo = await Pool.query(
+      "INSERT INTO tipo (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      [tipo]
+    );
+    //Obtener id_tipo
     const id_tipo = await Pool.query(
-      "INSERT INTO tipo (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING RETURNING id_tipo",
+      "SELECT id_tipo FROM tipo WHERE nombre=$1",
       [tipo]
     );
 
@@ -82,10 +96,11 @@ export const createProduct = async (req, res) => {
 // Funcion para obtener todos los productos
 export const getAllProduct = async (req, res) => {
   try {
+    //consulta retorna toda la info del producto, falta que retorne toda la infor de todos los Productos
     const consulta = await Pool.query(
-      "SELECT producto.id_producto AS id_producto, producto.nombre AS nombre, producto.descripcion AS descripcion, producto.stock AS stock, producto.empaque AS empaque, producto.intereses_tarjeta AS intereses_tarjeta, producto.ffee_traslado AS ffee_traslado, (producto.precio - (detalle_abastece.costo_unitario) - producto.empaque - producto.intereses_tarjeta - producto.ffee_traslado ) AS Margen, (producto.precio) AS rentabilidad, producto.precio AS precio, producto.imagen AS imagen FROM producto JOIN categoria on producto.id_categoria = categoria.id_categoria JOIN talla on producto.id_talla = talla.id_talla JOIN color on producto.id_color = color.id_color JOIN tipo on producto.id_tipo = tipo.id_tipo JOIN detalle_abastece on producto.id_producto = detalle_abastece.id_producto"
+      "SELECT producto.id_producto AS id_producto, producto.nombre AS nombre, producto.descripcion AS descripcion, producto.stock AS stock, producto.id_categoria AS categoria,producto.empaque AS empaque, producto.intereses_tarjeta AS intereses_tarjeta, producto.ffee_traslado AS ffee_traslado, producto.precio AS precio, producto.imagen AS imagen,talla.nombre AS talla, color.nombre AS color, tipo.nombre AS tipo FROM producto JOIN categoria on producto.id_categoria = categoria.id_categoria JOIN talla on producto.id_talla = talla.id_talla JOIN color on producto.id_color = color.id_color JOIN tipo on producto.id_tipo = tipo.id_tipo"
     );
-    // console.log(consulta.rows);
+    console.log(consulta);
     if (consulta.rows) {
       res.status(200).json({
         data: consulta.rows,

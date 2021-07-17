@@ -2,23 +2,34 @@ import React from "react";
 import Chart from "chart.js";
 
 export default function CardLineChart() {
-
   const mes = new Date().getMonth();
-  const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  
+  const meses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
 
   React.useEffect(() => {
     var config = {
       type: "line",
       data: {
         labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
         ],
         datasets: [
           {
@@ -120,7 +131,7 @@ export default function CardLineChart() {
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
                 Ventas
               </h6>
-              <h2 className="text-white text-xl font-semibold">{`${meses[mes]}`}</h2>
+              <h1 className="text-white text-xl font-semibold">{`${meses[mes]}`}</h1>
             </div>
           </div>
         </div>

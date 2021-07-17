@@ -7,22 +7,21 @@ import BotonEditar from "../Modal/BotonEditar";
 import BotonEliminar from "../Modal/BotonEliminar";
 import BotonInfo from "../Modal/BotonInfo";
 
-const TablaProductos = (props) => {
+const TablaProductos = ({ productos }) => {
   const location = useLocation();
-  const productos = props.productos;
   const [existenProductos, setExistenProductos] = useState(false);
 
   const existen = () => {
-    if (productos.length === 0) {
-      setExistenProductos(false);
-    } else {
+    if (productos) {
       setExistenProductos(true);
+    } else {
+      setExistenProductos(false);
     }
   };
 
   //funcion para extraer el valor de uploads\ del string de la imagen del producto
   const separarUrl = (cadena) => cadena.slice(8);
-
+  console.log(productos);
   useEffect(() => {
     existen();
   }, [location]);

@@ -21,7 +21,7 @@ export const getProductoMV = async (req, res) => {
 export const getTotalVentas = async (req, res) => {
   try {
       const consulta = await Pool.query(
-      'SELECT SUM(z.precio * y.cantidad) AS TOTAL_VENTAS FROM compra x JOIN detalle_compra y on x.id_compra = y.id_compraJOIN producto z on y.id_producto = z.id_producto WHERE --date_part(year, fecha) ');
+      'SELECT SUM(z.precio * y.cantidad) AS TOTAL_VENTAS FROM compra x JOIN detalle_compra y on x.id_compra = y.id_compra JOIN producto z on y.id_producto = z.id_producto WHERE --date_part(year, fecha) ');
     // console.log(consulta.rows);
     if (consulta.rows) {
       res.status(200).json({
@@ -33,3 +33,4 @@ export const getTotalVentas = async (req, res) => {
     res.json({ msg: error });
   }
 };
+

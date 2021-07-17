@@ -9,7 +9,6 @@ import adminRoutes from "./routes/admin";
 import productRoutes from "./routes/producto";
 import proveedorRoutes from "./routes/proveedor";
 import clienteRoutes from "./routes/cliente";
-import categoriaRoutes from "./routes/categoria";
 
 //Para ocupar variables ocultas .env
 dotenv.config();
@@ -32,7 +31,6 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/producto", productRoutes);
 app.use("/api/proveedor", proveedorRoutes);
 app.use("/api/cliente", clienteRoutes);
-app.use("/api/categoria", categoriaRoutes);
 
 //Se declara el puerto en el que correrá el servidor por medio de .env o asignandole por defecto el port:4000
 const PORT = process.env.PORT || 4000;

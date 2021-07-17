@@ -15,19 +15,14 @@ const Productos = () => {
   const location = useLocation();
 
   const [cargando, setCargando] = useState(<Cargando />);
-  // const [productos, setProductos] = useState({});
-  // console.log(location.pathname);
 
   const getProductos = async () => {
-    // console.log(user);
     const get = await axios
       .get(`http://localhost:4000/api/producto/getALL`)
       .then(
         (response) => {
-          // console.log(response.data.data);
-          // setRespuesta(!respuesta);
+          console.log(response.data.data);
           setCargando(<TablaProductos productos={response.data.data} />);
-          // setProductos(response.data.data);
         },
         (error) => {
           console.log(error);
