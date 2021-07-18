@@ -61,7 +61,7 @@ export const createProduct = async (req, res) => {
       [
         nombre,
         descripcion,
-        (stock + cantidad),
+        (stock.rows[0].stock + cantidad),
         empaque,
         intereses,
         ffee,
@@ -82,7 +82,7 @@ export const createProduct = async (req, res) => {
     //insert detalle_abastece
     const insert_detalle_abastece = await Pool.query(
       "INSERT INTO detalle_abastece (cantidad, costo_unitario, fecha, recibido, id_producto, id_proveedor) VALUES ($1,$2,$3,$4,$5)",
-      [cantidad, costo_unitario, fecha, recibido, id_producto, id_proveedor]
+      [cantidad, costo_unitario, fecha, recibido, id_producto.rows[0].id_producto, id_proveedor]
     );
     // const consulta = true;
     if (consulta) {
