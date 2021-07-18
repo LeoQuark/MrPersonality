@@ -3,21 +3,10 @@ import path from "path";
 import fs from "fs-extra";
 
 // Funcion para crear productos
+//datos (nombre, descripcion, empaque, intereses, ffee, precio, imagen, categoria, talla, color, tipo, cantidad, costo_unitario, recibido, id_proveedor)
 export const createProduct = async (req, res) => {
   const {
-    nombre,
-    descripcion,
-    stock,
-    empaque,
-    intereses,
-    ffee,
-    precio,
-    categoria,
-    talla,
-    color,
-    tipo,
-    id_admin,
-  } = req.body;
+    nombre, descripcion, empaque, intereses, ffee, precio, categoria, talla, color, tipo, cantidad, costo_unitario, fecha, recibido, id_proveedor} = req.body;
   //El objeto entregado por req.file contine toda la info del archivo subido (fieldname,originalname,encoding,mimetype,des tination,size,path,etc)
   const { path } = req.file;
   try {
@@ -61,14 +50,18 @@ export const createProduct = async (req, res) => {
       "SELECT id_tipo FROM tipo WHERE nombre=$1",
       [tipo]
     );
-
-    //agregar el producto
-    const consulta = await Pool.query(
+    //consulta para conocer el stock actual****
+    const stock = await Pool.query(
+      "SELECT stock FROM producto WHERE nombre=$1",
+      [nombre]
+    );
+    //agregar producto
+    const insert_producto= await Pool.query(
       "INSERT INTO producto (nombre, descripcion, stock, empaque, intereses_tarjeta, ffee_traslado, precio, imagen, id_categoria, id_talla, id_color, id_tipo, id_admin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
       [
         nombre,
         descripcion,
-        stock,
+        (stock + cantidad),
         empaque,
         intereses,
         ffee,
@@ -80,6 +73,16 @@ export const createProduct = async (req, res) => {
         id_tipo.rows[0].id_tipo,
         id_admin,
       ]
+    );
+    //obtener id_producto
+    const id_producto = await Pool.query(
+      "SELECT id_producto FROM producto WHERE nombre=$1",
+      [nombre]
+    );
+    //insert detalle_abastece
+    const insert_detalle_abastece = await Pool.query(
+      "INSERT INTO detalle_abastece (cantidad, costo_unitario, fecha, recibido, id_producto, id_proveedor) VALUES ($1,$2,$3,$4,$5)",
+      [cantidad, costo_unitario, fecha, recibido, id_producto, id_proveedor]
     );
     // const consulta = true;
     if (consulta) {

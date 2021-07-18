@@ -1,24 +1,33 @@
 import Pool from "../database/connection";
 
-// Funcion para agregar una compra
+// Funcion para agregar una venta
 export const createVenta = async (req, res) => {
-  const { cantidad, otros_gastos, id_producto,  fecha, tipo_compra, tipo_pago, id_cliente } = req.body;
+  const { cantidad, fecha, entregado, id_producto, tipo_compra, tipo_pago, id_cliente } = req.body;
   try {
-    const id_tipo_pago = await Pool.query(
-    "INSERT INTO tipo_pago (tipo_pago) VALUES ($1) ON CONFLICT (tipo_pago) DO NOTHING RETURNING id_tipo_pago",
+    //insert tipo pago
+    const insert_tipopago = await Pool.query(
+    "INSERT INTO tipo_pago (tipo_pago) VALUES ($1) ON CONFLICT (tipo_pago) DO NOTHING ",
     [tipo_pago]
     );
-    const id_tipo_compra = await Pool.query(
-    "INSERT INTO tipo_compra (tipo_compra) VALUES ($1) ON CONFLICT (tipo_compra) DO NOTHING RETURNING id_tipo_compra",
+    //Obtener el id_tipo_pago
+    const id_tipo_pago = await Pool.query(
+    "SELECT id_tipo_pago FROM tipo_pago WHERE tipo_pago=$1",
+    [tipo_pago]
+    );
+    //insert tipo compra
+    const insert_tipocompra = await Pool.query(
+    "INSERT INTO tipo_compra (tipo_compra) VALUES ($1) ON CONFLICT (tipo_compra) DO NOTHING ",
     [tipo_compra]
     );
-    const id_compra = await Pool.query(
-    "INSERT INTO compra (fecha, id_tipo_pago,id_cliente) VALUES ($1,$2,$3) RETURNING id_compra",
-    [fecha, id_tipo_pago, id_cliente]
+    //obtener el id_tipo_compra
+    const id_tipo_compra = await Pool.query(
+    "INSERT INTO compra (tipo_compra) VALUES ($1) WHERE tipo_compra=$1 ",
+    [tipo_compra]
     );
+    //insertar detalle_compra
     const consulta = await Pool.query(
-      "INSERT INTO detalle_compra (cantidad, otros_gastos, id_producto, id_compra, id_tipo_compra) VALUES ($1,$2,$3,$4,$5)",
-      [cantidad, otros_gastos, id_producto, id_compra, id_tipo_compra]
+    "INSERT INTO detalle_compra (cantidad, fecha, entregado, id_producto, id_tipo_compra, id_tipo_pago, id_cliente) VALUES ($1,$2,$3,$4,$5,$6,$7)",
+      [cantidad, fecha, entregado, id_producto, id_tipo_compra, id_tipo_pago, id_cliente]
     );
     if (consulta) {
       res.status(200).json({
