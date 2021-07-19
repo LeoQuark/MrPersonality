@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS Detalle_abastece(
     cantidad integer NOT NULL,
     costo_unitario integer NOT NULL,
     fecha timestamp,
-    entregado text,
+    recibido text,
     id_producto integer REFERENCES Producto(id_producto),
     id_proveedor integer REFERENCES Proveedor(id_proveedor)
 );
