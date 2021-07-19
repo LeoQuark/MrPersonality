@@ -17,17 +17,15 @@ const Productos = () => {
   const [cargando, setCargando] = useState(<Cargando />);
 
   const getProductos = async () => {
-    const get = await axios
-      .get(`http://localhost:4000/api/producto/getALL`)
-      .then(
-        (response) => {
-          console.log(response.data.data);
-          setCargando(<TablaProductos productos={response.data.data} />);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    await axios.get(`http://localhost:4000/api/producto/getALL`).then(
+      (response) => {
+        console.log(response.data.data);
+        setCargando(<TablaProductos productos={response.data.data} />);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
   useEffect(() => {
     getProductos();

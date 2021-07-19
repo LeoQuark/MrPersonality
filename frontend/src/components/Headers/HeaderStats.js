@@ -21,9 +21,9 @@ export default function HeaderStats() {
                 <Link to={`/admin/ventas/${id}`}>
                   <CardStats
                     statSubtitle="Ventas"
-                    statTitle="2.000"
+                    statTitle="0"
                     statArrow="up"
-                    statPercent="3.48"
+                    statPercent="0"
                     statPercentColor="text-green-500"
                     statDescripiron="Último mes"
                     statIconName="fas fa-dollar-sign fa-lg"
@@ -36,9 +36,9 @@ export default function HeaderStats() {
                 <Link to={`/admin/productos/${id}`}>
                   <CardStats
                     statSubtitle="Productos"
-                    statTitle="450"
+                    statTitle="0"
                     statArrow="down"
-                    statPercent="3.48"
+                    statPercent="0"
                     statPercentColor="text-red-500"
                     statDescripiron="Since last week"
                     statIconName="fas fa-cubes fa-lg"
@@ -50,9 +50,9 @@ export default function HeaderStats() {
                 <Link to={`/admin/clientes/${id}`}>
                   <CardStats
                     statSubtitle="Clientes"
-                    statTitle="924"
+                    statTitle="0"
                     statArrow="down"
-                    statPercent="1.10"
+                    statPercent="0"
                     statPercentColor="text-red-500"
                     statDescripiron="Since yesterday"
                     statIconName="fas fa-users fa-lg"
@@ -64,9 +64,9 @@ export default function HeaderStats() {
                 <Link to={`/admin/proveedores/${id}`}>
                   <CardStats
                     statSubtitle="Proveedores"
-                    statTitle="49,65%"
+                    statTitle="0"
                     statArrow="up"
-                    statPercent="12"
+                    statPercent="0"
                     statPercentColor="text-green-500"
                     statDescripiron="Since last month"
                     statIconName="fas fa-truck fa-lg"

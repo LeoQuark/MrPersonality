@@ -238,28 +238,6 @@ export default function Sidebar(props) {
                   Proveedores
                 </Link>
               </li>
-
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-2 my-1 font-bold block " +
-                    (window.location.href.indexOf("/admin/tables") !== -1
-                      ? "text-white bg-black rounded-lg hover:bg-gray-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to={`/admin/tables/${user.id_admin}`}
-                >
-                  <i
-                    className={
-                      "fas fa-table mx-2 text-sm " +
-                      (window.location.href.indexOf("/admin/tables") !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-500")
-                    }
-                  ></i>{" "}
-                  Tablas
-                </Link>
-              </li>
             </ul>
 
             {/* Divider */}

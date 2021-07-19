@@ -7,44 +7,43 @@ import BotonEditar from "../Modal/Productos/BotonEditar";
 import BotonEliminar from "../Modal/BotonEliminar";
 import BotonInfo from "../Modal/BotonInfo";
 
-const TablaClientes = ({ clientes }) => {
+const TablaVentasMini = ({ ventas }) => {
   const location = useLocation();
-  const [existenClientes, setExistenClientes] = useState(false);
+  const [existenVentas, setExistenVentas] = useState(false);
 
-  console.log(clientes);
   const existen = () => {
-    if (clientes) {
-      setExistenClientes(true);
+    if (ventas) {
+      setExistenVentas(true);
     } else {
-      setExistenClientes(false);
+      setExistenVentas(false);
     }
   };
 
   //funcion para extraer el valor de uploads\ del string de la imagen del producto
   const separarUrl = (cadena) => cadena.slice(8);
-
+  //   console.log(productos);
   useEffect(() => {
     existen();
   }, [location]);
 
   return (
     <>
-      {existenClientes ? (
+      {existenVentas ? (
         <div className="block w-full overflow-x-auto">
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr className="bg-blueGray-200 w-full">
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-extrabold text-left text-blueGray-500 border-blueGray-100">
-                  ID
+                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
+                  Imagen
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
                   Nombre
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                  Instagram
+                  Stock
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                  Correo
+                  Precio
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
                   Acciones
@@ -52,28 +51,28 @@ const TablaClientes = ({ clientes }) => {
               </tr>
             </thead>
             <tbody>
-              {clientes.map((cliente) => (
-                <tr key={cliente.id_cliente} className="hover:bg-gray-200">
-                  <td className="border-t-0 px-6 max-w-max align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500 font-extrabold">
-                    {` ${cliente.id_cliente}`}
+              {ventas.map((venta) => (
+                <tr key={venta.id_venta} className="hover:bg-gray-200">
+                  <td className="border-t-0 px-6 max-w-max align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
+                    {` ${venta.nombre}`}
+                  </td>
+                  <td className="border-t-0 px-6 max-w-max align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
+                    {` ${venta.nombre}`}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
-                    {` ${cliente.nombre}`}
+                    {` ${venta.stock}`}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
-                    {` ${cliente.user_instagram}`}
-                  </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
-                    {cliente.correo}
+                    {` ${venta.precio}`}
                   </td>
                   <td className="border-t-0 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
                     <div className="flex justify-between">
-                      <BotonInfo info={cliente} />
-                      {/* <BotonEditar clientes={clientes} /> */}
+                      <BotonInfo info={venta} />
+                      {/* <BotonEditar producto={producto} /> */}
                       <BotonEliminar
-                        info={cliente}
-                        tipo={"clientes"}
-                        id={"cliente"}
+                        info={venta}
+                        tipo={"proveedores"}
+                        id={"producto"}
                       />
                     </div>
                   </td>
@@ -93,4 +92,4 @@ const TablaClientes = ({ clientes }) => {
   );
 };
 
-export default TablaClientes;
+export default TablaVentasMini;
