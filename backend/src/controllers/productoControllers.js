@@ -5,24 +5,7 @@ import fs from "fs-extra";
 // Funcion para crear productos
 //datos (nombre, descripcion, empaque, intereses, ffee, precio, imagen, categoria, talla, color, tipo, cantidad, costo_unitario, recibido, id_proveedor)
 export const createProduct = async (req, res) => {
-  const {
-    nombre,
-    descripcion,
-    empaque,
-    intereses,
-    ffee,
-    precio,
-    categoria,
-    talla,
-    color,
-    tipo,
-    cantidad,
-    costo_unitario,
-    fecha,
-    recibido,
-    id_admin,
-    id_proveedor,
-  } = req.body;
+  const { nombre, descripcion, empaque,intereses,ffee,precio,categoria,talla,color,tipo,cantidad,costo_unitario,fecha,recibido,id_admin, id_proveedor} = req.body;
   //El objeto entregado por req.file contine toda la info del archivo subido (fieldname,originalname,encoding,mimetype,des tination,size,path,etc)
   const { path } = req.file;
   try {
@@ -147,7 +130,6 @@ export const getAllProduct = async (req, res) => {
     res.json({ msg: error });
   }
 };
-
 // Funcion que obtiene un producto por medio de su id
 export const getProductById = async (req, res) => {
   const { id } = req.params;
@@ -167,17 +149,99 @@ export const getProductById = async (req, res) => {
     res.json({ msg: error });
   }
 };
-
-// Funcion que actuliza la información del admin a partir de su id
+// Funcion que actualiza un producto y proveedor x id (PARA CUANDO SE MUESTREN SOLO LOS PRODUCTOS)
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { nombre, descripcion, precio, stock } = req.body;
+  const { nombre, descripcion, empaque, intereses, ffee, precio, categoria, talla, color, tipo } = req.body;
   try {
+    //insertar categoria
+    const insert_categoria = await Pool.query(
+      "INSERT INTO categoria (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      [categoria]
+    );
+    //Obtener el id_categoria del dato ingresado
+    const id_categoria = await Pool.query(
+      "SELECT id_categoria FROM categoria WHERE nombre=$1",
+      [categoria]
+    );
+    //insert talla
+    const insert_talla = await Pool.query(
+      "INSERT INTO talla (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      [talla]
+    );
+    //obtener el id_talla del dato ingresado
+    const id_talla = await Pool.query(
+      "SELECT id_talla FROM talla WHERE nombre=$1",
+      [talla]
+    );
+    //insert color
+    const insert_color = await Pool.query(
+      "INSERT INTO color (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      [color]
+    );
+    //Obtener id_color
+    const id_color = await Pool.query(
+      "SELECT id_color FROM color WHERE nombre=$1",
+      [color]
+    );
+    //insert tipo
+    const insert_tipo = await Pool.query(
+      "INSERT INTO tipo (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      [tipo]
+    );
+    //Obtener id_tipo
+    const id_tipo = await Pool.query(
+      "SELECT id_tipo FROM tipo WHERE nombre=$1",
+      [tipo]
+    );
+    
     const consulta = await Pool.query(
-      "UPDATE producto SET nombre=$1, descripcion=$2, precio=$3, stock=$4 WHERE id_producto=$5",
-      [nombre, descripcion, precio, stock, id]
+      "UPDATE producto SET nombre=$1, descripcion=$2, empaque=$3, intereses=$4, ffee=$5, precio=$6, id_categoria=$7, id_talla=$8, id_color=$9, id_tipo=$10 WHERE id_producto=$11",
+      [nombre, descripcion, empaque, intereses, ffee, precio, id_categoria.rows[0].id_categoria, id_talla.rows[0].id_talla, id_color.rows[0].id_color, id_tipo.rows[0].id_tipo, id]
     );
 
+    if (consulta) {
+      res.status(200).json({
+        msg: `El producto ${nombre} ha sido actualizado`,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ msg: error });
+  }
+};
+
+
+// Funcion que actualiza detalle_abastece x id (PARA CUANDO SE MUESTREN LOS PRODUCTOS EN LOS PROVEEDORES)
+export const updateDetalle_abastece = async (req, res) => {
+  const { nombre, cantidad, costo_unitario, recibido, proveedor, id_producto } = req.body;
+  const { id } = req.params;
+  try {
+    const cantidad_ = await Pool.query(
+      "SELECT cantidad FROM detalle_abastece WHERE id_detalle_abastece=$1",
+      [id]
+    );
+  
+    //insert proveedor
+    const insert_proveedor = await Pool.query(
+      "INSERT INTO proveedor (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      [proveedor]
+    );
+    //Obtener id_proveedor
+    const id_proveedor = await Pool.query(
+      "SELECT id_proveedor FROM tipo WHERE nombre=$1",
+      [proveedor]
+    );
+    
+    const update_detalle_abastece = await Pool.query(
+      "UPDATE detalle_abastece SET cantidad=$1, costo_unitario=$2, recibido=$3, id_proveedor=$4, WHERE id_detalle_abastece=$5",
+      [cantidad, costo_unitario, recibido, id_proveedor.rows[0].id_proveedor, id]
+    );
+    const update_producto = await Pool.query(
+      "UPDATE producto SET stock=$1, WHERE id_producto=$2",
+      [(stock+cantidad-(cantidad_.rows[0].cantidad)), id_producto]
+    );
+    
     if (consulta) {
       res.status(200).json({
         msg: `El producto ${nombre} ha sido actualizado`,
