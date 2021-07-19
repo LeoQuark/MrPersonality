@@ -3,8 +3,8 @@ import { Fragment, useRef, useState, useEffect, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import UserContext from "../../context/UserContext";
-import { API_URL } from "../../utils/api-data";
+import UserContext from "../../../context/UserContext";
+import { API_URL } from "../../../utils/api-data";
 
 export default function BotonEditar(props) {
   const { user } = useContext(UserContext);

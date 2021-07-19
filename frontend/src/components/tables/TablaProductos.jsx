@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { API_URL } from "../../utils/api-data";
 
 //components
-import BotonEditar from "../Modal/BotonEditar";
+import BotonEditar from "../Modal/Productos/BotonEditar";
 import BotonEliminar from "../Modal/BotonEliminar";
 import BotonInfo from "../Modal/BotonInfo";
 
@@ -88,8 +88,12 @@ const TablaProductos = ({ productos }) => {
                   <td className="border-t-0 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
                     <div className="flex justify-between">
                       <BotonInfo info={producto} />
-                      <BotonEditar producto={producto} />
-                      <BotonEliminar info={producto} tipo={"producto"} />
+                      {/* <BotonEditar producto={producto} /> */}
+                      <BotonEliminar
+                        info={producto}
+                        tipo={"productos"}
+                        id={"producto"}
+                      />
                     </div>
                   </td>
                 </tr>

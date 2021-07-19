@@ -7,7 +7,7 @@ import BotonEditar from "../Modal/Productos/BotonEditar";
 import BotonEliminar from "../Modal/BotonEliminar";
 import BotonInfo from "../Modal/BotonInfo";
 
-const TablaClientes = ({ productos }) => {
+const TablaProductosMini = ({ productos }) => {
   const location = useLocation();
   const [existenProductos, setExistenProductos] = useState(false);
 
@@ -21,7 +21,7 @@ const TablaClientes = ({ productos }) => {
 
   //funcion para extraer el valor de uploads\ del string de la imagen del producto
   const separarUrl = (cadena) => cadena.slice(8);
-  console.log(productos);
+  //   console.log(productos);
   useEffect(() => {
     existen();
   }, [location]);
@@ -40,16 +40,10 @@ const TablaClientes = ({ productos }) => {
                   Nombre
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                  Disponible
-                </th>
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                  Categoria
+                  Stock
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
                   Precio
-                </th>
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
-                  Stock
                 </th>
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left text-blueGray-500 border-blueGray-100">
                   Acciones
@@ -70,20 +64,10 @@ const TablaClientes = ({ productos }) => {
                     {` ${producto.nombre}`}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
-                    {producto.stock <= 0 ? (
-                      <div className="p-1 mx-auto w-1 bg-red-500 rounded-full shadow-md"></div>
-                    ) : (
-                      <div className="p-1 mx-auto w-1 bg-green-500 rounded-full shadow-md"></div>
-                    )}
-                  </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
-                    {` ${producto.categoria}`}
+                    {` ${producto.stock}`}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
                     {` ${producto.precio}`}
-                  </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
-                    {producto.stock}
                   </td>
                   <td className="border-t-0 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-blueGray-500">
                     <div className="flex justify-between">
@@ -91,7 +75,7 @@ const TablaClientes = ({ productos }) => {
                       {/* <BotonEditar producto={producto} /> */}
                       <BotonEliminar
                         info={producto}
-                        tipo={"productos"}
+                        tipo={"proveedores"}
                         id={"producto"}
                       />
                     </div>
@@ -112,4 +96,4 @@ const TablaClientes = ({ productos }) => {
   );
 };
 
-export default TablaClientes;
+export default TablaProductosMini;

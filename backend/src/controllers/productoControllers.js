@@ -6,7 +6,23 @@ import fs from "fs-extra";
 //datos (nombre, descripcion, empaque, intereses, ffee, precio, imagen, categoria, talla, color, tipo, cantidad, costo_unitario, recibido, id_proveedor)
 export const createProduct = async (req, res) => {
   const {
-    nombre, descripcion, empaque, intereses, ffee, precio, categoria, talla, color, tipo, cantidad, costo_unitario, fecha, recibido, id_proveedor} = req.body;
+    nombre,
+    descripcion,
+    empaque,
+    intereses,
+    ffee,
+    precio,
+    categoria,
+    talla,
+    color,
+    tipo,
+    cantidad,
+    costo_unitario,
+    fecha,
+    recibido,
+    id_admin,
+    id_proveedor,
+  } = req.body;
   //El objeto entregado por req.file contine toda la info del archivo subido (fieldname,originalname,encoding,mimetype,des tination,size,path,etc)
   const { path } = req.file;
   try {
@@ -55,13 +71,24 @@ export const createProduct = async (req, res) => {
       "SELECT stock FROM producto WHERE nombre=$1",
       [nombre]
     );
-    //agregar producto
-    const insert_producto= await Pool.query(
+
+    // console.log(stock);
+    const stockReal = (stock) => {
+      if (stock.rows[0] != null) {
+        return stock.rows[0].stock;
+      }
+      if (stock.rowCount == 0) {
+        return 0;
+      }
+    };
+    console.log(stockReal(stock));
+    // agregar producto
+    const insert_producto = await Pool.query(
       "INSERT INTO producto (nombre, descripcion, stock, empaque, intereses_tarjeta, ffee_traslado, precio, imagen, id_categoria, id_talla, id_color, id_tipo, id_admin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
       [
         nombre,
         descripcion,
-        (stock + cantidad),
+        stockReal(stock) + cantidad,
         empaque,
         intereses,
         ffee,
@@ -82,10 +109,16 @@ export const createProduct = async (req, res) => {
     //insert detalle_abastece
     const insert_detalle_abastece = await Pool.query(
       "INSERT INTO detalle_abastece (cantidad, costo_unitario, fecha, recibido, id_producto, id_proveedor) VALUES ($1,$2,$3,$4,$5)",
-      [cantidad, costo_unitario, fecha, recibido, id_producto, id_proveedor]
+      [
+        cantidad,
+        costo_unitario,
+        fecha,
+        recibido,
+        id_producto.rows[0].id_producto,
+        id_proveedor,
+      ]
     );
-    // const consulta = true;
-    if (consulta) {
+    if (insert_producto && insert_detalle_abastece) {
       res.status(200).json({
         msg: `producto creado correctamente`,
       });
@@ -103,7 +136,7 @@ export const getAllProduct = async (req, res) => {
     const consulta = await Pool.query(
       "SELECT producto.id_producto AS id_producto, producto.nombre AS nombre, producto.descripcion AS descripcion, producto.stock AS stock, producto.id_categoria AS categoria,producto.empaque AS empaque, producto.intereses_tarjeta AS intereses_tarjeta, producto.ffee_traslado AS ffee_traslado, producto.precio AS precio, producto.imagen AS imagen,talla.nombre AS talla, color.nombre AS color, tipo.nombre AS tipo FROM producto JOIN categoria on producto.id_categoria = categoria.id_categoria JOIN talla on producto.id_talla = talla.id_talla JOIN color on producto.id_color = color.id_color JOIN tipo on producto.id_tipo = tipo.id_tipo"
     );
-    console.log(consulta);
+    // console.log(consulta);
     if (consulta.rows) {
       res.status(200).json({
         data: consulta.rows,

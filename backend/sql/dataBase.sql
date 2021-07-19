@@ -125,5 +125,3 @@ CREATE TABLE IF NOT EXISTS Detalle_compra(
     id_tipo_pago integer REFERENCES Tipo_pago(id_tipo_pago),
     id_cliente integer REFERENCES Cliente(id_cliente)
 );
-
-

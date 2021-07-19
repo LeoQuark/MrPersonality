@@ -1,47 +1,43 @@
-import { Fragment, useRef, useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+/* This example requires Tailwind CSS v2.0+ */
+import { Fragment, useRef, useState, useEffect, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
-import UserContext from "../../context/UserContext";
-import { API_URL } from "../../utils/api-data";
+import UserContext from "../../../context/UserContext";
+import { API_URL } from "../../../utils/api-data";
 
-export default function BotonAgregar(props) {
+export default function BotonEditar(props) {
   const { user } = useContext(UserContext);
+  const { producto } = props;
   const history = useHistory();
-  const formData = new FormData();
-
   const [open, setOpen] = useState(false);
+  const [seleccion, setSeleccion] = useState({});
+  const [usuario, setUsuario] = useState({});
   const [inputProductos, setInputProductos] = useState({});
-  const [fileData, setFileData] = useState({});
 
   const cancelButtonRef = useRef(null);
+  const seleccionarProducto = (elemento) => {
+    setSeleccion(elemento);
+    setOpen(true);
+  };
 
   const handleInput = (event) => {
     event.preventDefault();
-    if (event.target.name === "imagen") {
-      setFileData(event.target.files[0]);
-    }
     setInputProductos({
       ...inputProductos,
       [event.target.name]: event.target.value,
     });
+    console.log(inputProductos);
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    formData.append("nombre", inputProductos.nombre);
-    formData.append("descripcion", inputProductos.descripcion);
-    formData.append("precio", inputProductos.precio);
-    formData.append("stock", inputProductos.stock);
-    formData.append("imagen", fileData);
-    await axios
-      .post(`${API_URL}/api/producto/create`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+    const id = seleccion.id_producto;
+    console.log(usuario, user);
+    const update = await axios
+      .put(`${API_URL}/api/producto/update/${id}`, inputProductos)
       .then(
         (response) => {
+          console.log(response);
           if (response.status === 200) {
             setOpen(false);
             history.push(`/admin/productos/${user.user.id_admin}`);
@@ -53,14 +49,18 @@ export default function BotonAgregar(props) {
       );
   };
 
+  useEffect(() => {
+    setUsuario(user);
+  }, []);
+
   return (
     <>
       <button
         type="button"
-        className="mr-2 p-2 bg-black text-white rounded shadow-md"
-        onClick={() => setOpen(true)}
+        className="mx-1 p-2 bg-blue-500 font-bold text-white rounded shadow-md"
+        onClick={() => seleccionarProducto(producto)}
       >
-        Agregar Producto
+        Editar
       </button>
       <Transition.Root show={open} as={Fragment}>
         <Dialog
@@ -101,19 +101,16 @@ export default function BotonAgregar(props) {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <form
-                  action=""
-                  onSubmit={handleSubmit}
-                  enctype="multipart/form-data"
-                >
+                <form action="" onSubmit={handleSubmit}>
                   <Dialog.Title
                     as="h3"
                     className="p-4 text-lg leading-6 font-medium text-white bg-black flex justify-between"
                   >
-                    Agregar un grupo
+                    <div>{`Producto - ${seleccion.nombre}`}</div>
+                    <div>{`id : ${seleccion.id_producto}`}</div>
                   </Dialog.Title>
                   <div className="bg-white px-4 pt-4 pb-2 sm:p-4">
-                    <div className="sm:flex sm:items-center">
+                    <div className="sm:flex sm:items-start">
                       <div className="text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <div className="">
                           <table className="table-auto">
@@ -126,6 +123,7 @@ export default function BotonAgregar(props) {
                                     name="nombre"
                                     onChange={handleInput}
                                     className="my-1 md:mx-6 py-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    defaultValue={seleccion.nombre}
                                   />
                                 </td>
                               </tr>
@@ -137,6 +135,7 @@ export default function BotonAgregar(props) {
                                     name="descripcion"
                                     onChange={handleInput}
                                     className="py-1 my-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    defaultValue={seleccion.descripcion}
                                   />
                                 </td>
                               </tr>
@@ -148,6 +147,7 @@ export default function BotonAgregar(props) {
                                     name="precio"
                                     onChange={handleInput}
                                     className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    defaultValue={seleccion.precio}
                                   />
                                 </td>
                               </tr>
@@ -159,39 +159,7 @@ export default function BotonAgregar(props) {
                                     name="stock"
                                     onChange={handleInput}
                                     className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                  />
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="text-sm">Empaque</td>
-                                <td>
-                                  <input
-                                    type="text"
-                                    name="empaque"
-                                    onChange={handleInput}
-                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                  />
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="text-sm">Intereses</td>
-                                <td>
-                                  <input
-                                    type="text"
-                                    name="intereses"
-                                    onChange={handleInput}
-                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                  />
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="text-sm">FF.EE</td>
-                                <td>
-                                  <input
-                                    type="text"
-                                    name="ffee"
-                                    onChange={handleInput}
-                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    defaultValue={seleccion.stock}
                                   />
                                 </td>
                               </tr>
@@ -203,39 +171,7 @@ export default function BotonAgregar(props) {
                                     name="categoria"
                                     onChange={handleInput}
                                     className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                  />
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="text-sm">Talla</td>
-                                <td>
-                                  <input
-                                    type="text"
-                                    name="talla"
-                                    onChange={handleInput}
-                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                  />
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="text-sm">Color</td>
-                                <td>
-                                  <input
-                                    type="text"
-                                    name="color"
-                                    onChange={handleInput}
-                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                  />
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="text-sm">Tipo</td>
-                                <td>
-                                  <input
-                                    type="text"
-                                    name="tipo"
-                                    onChange={handleInput}
-                                    className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    defaultValue={seleccion.categoria}
                                   />
                                 </td>
                               </tr>
@@ -245,7 +181,6 @@ export default function BotonAgregar(props) {
                                   <input
                                     type="file"
                                     name="imagen"
-                                    accept="image/png, image/jpeg"
                                     onChange={handleInput}
                                     className="my-1 py-1 md:mx-6 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                     // defaultValue={seleccion.categoria}
@@ -262,8 +197,9 @@ export default function BotonAgregar(props) {
                     <button
                       type="submit"
                       className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      // onClick={() => setOpen(false)}
                     >
-                      Agregar
+                      Guardar
                     </button>
                     <button
                       type="button"

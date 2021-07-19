@@ -8,10 +8,10 @@ import UserContext from "../../context/UserContext";
 //components
 import Cargando from "../../components/Cargando";
 import TablaProductos from "../../components/tables/TablaProductos";
-import BotonAgregar from "../../components/Modal/BotonAgregar";
+// import BotonAgregar from "../../components/Modal/Productos/AgregarProducto";
 
 const Productos = () => {
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
   const location = useLocation();
 
   const [cargando, setCargando] = useState(<Cargando />);
@@ -50,7 +50,7 @@ const Productos = () => {
                   </h3>
                 </div>
                 <div className="text-blueGray-700 block">
-                  <BotonAgregar />
+                  {/* <BotonAgregar /> */}
                 </div>
               </div>
             </div>

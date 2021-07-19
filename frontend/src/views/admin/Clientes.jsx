@@ -16,19 +16,17 @@ const Clientes = () => {
 
   const getClientes = async () => {
     // console.log(user);
-    const get = await axios
-      .get(`http://localhost:4000/api/cliente/getALL`)
-      .then(
-        (response) => {
-          console.log(response.data.data);
-          // setRespuesta(!respuesta);
-          setCargando(<TablaClientes clientes={response.data.data} />);
-          // setProductos(response.data.data);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    await axios.get(`http://localhost:4000/api/cliente/getALL`).then(
+      (response) => {
+        console.log(response.data.data);
+        // setRespuesta(!respuesta);
+        setCargando(<TablaClientes clientes={response.data.data} />);
+        // setProductos(response.data.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
   useEffect(() => {
     getClientes();

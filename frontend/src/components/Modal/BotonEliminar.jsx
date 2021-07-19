@@ -6,7 +6,7 @@ import axios from "axios";
 import UserContext from "../../context/UserContext";
 import { API_URL } from "../../utils/api-data";
 
-export default function BotonEliminars({ info, tipo }) {
+export default function BotonEliminars({ info, tipo, id }) {
   const { user } = useContext(UserContext);
   const history = useHistory();
   const [open, setOpen] = useState(false);
@@ -15,16 +15,19 @@ export default function BotonEliminars({ info, tipo }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const id = info[`id_${tipo}`];
+    const identificador = info[`id_${id}`];
 
-    await axios.delete(`${API_URL}/api/${tipo}/delete/${id}`).then(
+    // console.log(identificador);
+    await axios.delete(`${API_URL}/api/${id}/delete/${identificador}`).then(
       (response) => {
         if (response.status === 200) {
           setOpen(false);
-          history.push(`/admin/${tipo}s/${user.user.id_admin}`);
+          console.log(`/admin/${tipo}/${user.user.id_admin}`);
+          history.push(`/admin/${tipo}/${user.user.id_admin}`);
         }
       },
       (error) => {
+        console.log("jdisjidjsd");
         console.log(error);
       }
     );
@@ -84,7 +87,7 @@ export default function BotonEliminars({ info, tipo }) {
                     className="p-4 text-lg leading-6 font-medium text-white bg-black flex justify-between"
                   >
                     <div>{`Eliminar el producto - ${info.nombre}`}</div>
-                    <div>{`id : ${info[`id_${tipo}`]}`}</div>
+                    <div>{`id : ${info[`id_${id}`]}`}</div>
                   </Dialog.Title>
                   <div className="bg-white px-4 pt-4 pb-2 sm:p-4">
                     <div className="sm:flex sm:items-start">
