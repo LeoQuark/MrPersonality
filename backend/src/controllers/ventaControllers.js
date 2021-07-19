@@ -27,7 +27,7 @@ export const createVenta = async (req, res) => {
     //insertar detalle_compra
     const consulta = await Pool.query(
     "INSERT INTO detalle_compra (cantidad, fecha, entregado, id_producto, id_tipo_compra, id_tipo_pago, id_cliente) VALUES ($1,$2,$3,$4,$5,$6,$7)",
-      [cantidad, fecha, entregado, id_producto, id_tipo_compra, id_tipo_pago, id_cliente]
+      [cantidad, fecha, entregado, id_producto, id_tipo_compra.rows[0].id_tipo_compra, id_tipo_pago.rows[0].id_tipo_pago, id_cliente]
     );
     if (consulta) {
       res.status(200).json({
