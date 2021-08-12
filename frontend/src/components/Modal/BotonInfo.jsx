@@ -63,7 +63,7 @@ export default function BotonInfo({ info }) {
                   className="p-4 text-lg leading-6 font-medium text-white bg-black flex justify-between"
                 >
                   <div>{`Información del info - ${info.nombre}`}</div>
-                  <div>{`id : ${info.id_producto}`}</div>
+                  <div>{`id : ${info.id_proveedor}`}</div>
                 </Dialog.Title>
                 <div className="bg-white pt-4 pb-2 sm:py-4">
                   <div className="sm:flex items-start lg:items-stretch justify-evenly w-full">

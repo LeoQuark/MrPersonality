@@ -43,12 +43,8 @@ export default function CardProfile({ user }) {
                 <div className="relative">
                   <img
                     alt="..."
-                    // src={
-                    //   !user.user.imagen != undefined
-                    //     ? `${API_URL}/${user.user.imagen.slice(8)}`
-                    //     : require("assets/img/team-2-800x800.jpg").default
-                    // }
-                    className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
+                    src={require("assets/img/logo-mrpersonality.png").default}
+                    className="shadow-xl rounded-full h-auto align-middle border-none absolute bg-white -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                   />
                 </div>
               </div>

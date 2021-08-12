@@ -5,7 +5,24 @@ import fs from "fs-extra";
 // Funcion para crear productos
 //datos (nombre, descripcion, empaque, intereses, ffee, precio, imagen, categoria, talla, color, tipo, cantidad, costo_unitario, recibido, id_proveedor)
 export const createProduct = async (req, res) => {
-  const { nombre, descripcion, empaque,intereses,ffee,precio,categoria,talla,color,tipo,cantidad,costo_unitario,fecha,recibido,id_admin, id_proveedor} = req.body;
+  const {
+    nombre,
+    descripcion,
+    empaque,
+    intereses,
+    ffee,
+    precio,
+    categoria,
+    talla,
+    color,
+    tipo,
+    cantidad,
+    costo_unitario,
+    fecha,
+    recibido,
+    id_admin,
+    id_proveedor,
+  } = req.body;
   //El objeto entregado por req.file contine toda la info del archivo subido (fieldname,originalname,encoding,mimetype,des tination,size,path,etc)
   const { path } = req.file;
   try {
@@ -64,7 +81,7 @@ export const createProduct = async (req, res) => {
         return 0;
       }
     };
-    console.log(stockReal(stock));
+    // console.log(stockReal(stock));
     // agregar producto
     const insert_producto = await Pool.query(
       "INSERT INTO producto (nombre, descripcion, stock, empaque, intereses_tarjeta, ffee_traslado, precio, imagen, id_categoria, id_talla, id_color, id_tipo, id_admin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
@@ -91,7 +108,7 @@ export const createProduct = async (req, res) => {
     );
     //insert detalle_abastece
     const insert_detalle_abastece = await Pool.query(
-      "INSERT INTO detalle_abastece (cantidad, costo_unitario, fecha, recibido, id_producto, id_proveedor) VALUES ($1,$2,$3,$4,$5)",
+      "INSERT INTO detalle_abastece (cantidad, costo_unitario, fecha, recibido, id_producto, id_proveedor) VALUES ($1,$2,$3,$4,$5,$6)",
       [
         cantidad,
         costo_unitario,
@@ -117,7 +134,7 @@ export const getAllProduct = async (req, res) => {
   try {
     //consulta retorna toda la info del producto, falta que retorne toda la infor de todos los Productos
     const consulta = await Pool.query(
-      "SELECT producto.id_producto AS id_producto, producto.nombre AS nombre, producto.descripcion AS descripcion, producto.stock AS stock, producto.empaque AS empaque, producto.intereses_tarjeta AS intereses_tarjeta, producto.ffee_traslado AS ffee_traslado, producto.precio AS precio, producto.imagen AS imagen,talla.nombre AS talla, color.nombre AS color, tipo.nombre AS tipo, (producto.precio - x.costo_unitario - producto.empaque - producto.intereses_tarjeta - producto.ffee_traslado) AS margen, ((producto.precio - x.costo_unitario - producto.empaque - producto.intereses_tarjeta - producto.ffee_traslado)/(x.costo_unitario + producto.empaque + producto.intereses_tarjeta + producto.ffee_traslado)) as rentabilidad, proveedor.nombre AS proveedor, producto.imagen AS imagen FROM producto JOIN categoria on producto.id_categoria = categoria.id_categoria JOIN talla on producto.id_talla = talla.id_talla JOIN color on producto.id_color = color.id_color JOIN tipo on producto.id_tipo = tipo.id_tipo JOIN detalle_abastece x on x.id_producto = producto.id_producto JOIN proveedor on x.id_proveedor = proveedor.id_proveedor"
+      "SELECT producto.id_producto AS id_producto, producto.nombre AS nombre, producto.descripcion AS descripcion, producto.stock AS stock, producto.empaque AS empaque, producto.intereses_tarjeta AS intereses_tarjeta, producto.ffee_traslado AS ffee_traslado, categoria.nombre AS categoria, producto.precio AS precio, producto.imagen AS imagen,talla.nombre AS talla, color.nombre AS color, tipo.nombre AS tipo, (producto.precio - x.costo_unitario - producto.empaque - producto.intereses_tarjeta - producto.ffee_traslado) AS margen, ((producto.precio - x.costo_unitario - producto.empaque - producto.intereses_tarjeta - producto.ffee_traslado)/(x.costo_unitario + producto.empaque + producto.intereses_tarjeta + producto.ffee_traslado)) as rentabilidad, proveedor.nombre AS proveedor, producto.imagen AS imagen FROM producto JOIN categoria on producto.id_categoria = categoria.id_categoria JOIN talla on producto.id_talla = talla.id_talla JOIN color on producto.id_color = color.id_color JOIN tipo on producto.id_tipo = tipo.id_tipo JOIN detalle_abastece x on x.id_producto = producto.id_producto JOIN proveedor on x.id_proveedor = proveedor.id_proveedor"
     );
     // console.log(consulta);
     if (consulta.rows) {
@@ -152,7 +169,18 @@ export const getProductById = async (req, res) => {
 // Funcion que actualiza un producto y proveedor x id (PARA CUANDO SE MUESTREN SOLO LOS PRODUCTOS)
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { nombre, descripcion, empaque, intereses, ffee, precio, categoria, talla, color, tipo } = req.body;
+  const {
+    nombre,
+    descripcion,
+    empaque,
+    intereses,
+    ffee,
+    precio,
+    categoria,
+    talla,
+    color,
+    tipo,
+  } = req.body;
   try {
     //insertar categoria
     const insert_categoria = await Pool.query(
@@ -194,10 +222,22 @@ export const updateProduct = async (req, res) => {
       "SELECT id_tipo FROM tipo WHERE nombre=$1",
       [tipo]
     );
-    
+
     const consulta = await Pool.query(
       "UPDATE producto SET nombre=$1, descripcion=$2, empaque=$3, intereses=$4, ffee=$5, precio=$6, id_categoria=$7, id_talla=$8, id_color=$9, id_tipo=$10 WHERE id_producto=$11",
-      [nombre, descripcion, empaque, intereses, ffee, precio, id_categoria.rows[0].id_categoria, id_talla.rows[0].id_talla, id_color.rows[0].id_color, id_tipo.rows[0].id_tipo, id]
+      [
+        nombre,
+        descripcion,
+        empaque,
+        intereses,
+        ffee,
+        precio,
+        id_categoria.rows[0].id_categoria,
+        id_talla.rows[0].id_talla,
+        id_color.rows[0].id_color,
+        id_tipo.rows[0].id_tipo,
+        id,
+      ]
     );
 
     if (consulta) {
@@ -211,17 +251,17 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-
 // Funcion que actualiza detalle_abastece x id (PARA CUANDO SE MUESTREN LOS PRODUCTOS EN LOS PROVEEDORES)
 export const updateDetalle_abastece = async (req, res) => {
-  const { nombre, cantidad, costo_unitario, recibido, proveedor, id_producto } = req.body;
+  const { nombre, cantidad, costo_unitario, recibido, proveedor, id_producto } =
+    req.body;
   const { id } = req.params;
   try {
     const cantidad_ = await Pool.query(
       "SELECT cantidad FROM detalle_abastece WHERE id_detalle_abastece=$1",
       [id]
     );
-  
+
     //insert proveedor
     const insert_proveedor = await Pool.query(
       "INSERT INTO proveedor (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
@@ -232,16 +272,22 @@ export const updateDetalle_abastece = async (req, res) => {
       "SELECT id_proveedor FROM tipo WHERE nombre=$1",
       [proveedor]
     );
-    
+
     const update_detalle_abastece = await Pool.query(
       "UPDATE detalle_abastece SET cantidad=$1, costo_unitario=$2, recibido=$3, id_proveedor=$4, WHERE id_detalle_abastece=$5",
-      [cantidad, costo_unitario, recibido, id_proveedor.rows[0].id_proveedor, id]
+      [
+        cantidad,
+        costo_unitario,
+        recibido,
+        id_proveedor.rows[0].id_proveedor,
+        id,
+      ]
     );
     const update_producto = await Pool.query(
       "UPDATE producto SET stock=$1, WHERE id_producto=$2",
-      [(stock+cantidad-(cantidad_.rows[0].cantidad)), id_producto]
+      [stock + cantidad - cantidad_.rows[0].cantidad, id_producto]
     );
-    
+
     if (consulta) {
       res.status(200).json({
         msg: `El producto ${nombre} ha sido actualizado`,

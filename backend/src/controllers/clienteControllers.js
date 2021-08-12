@@ -23,24 +23,24 @@ export const createCliente = async (req, res) => {
     );
     //insertar y consultar comuna, region
     const insert_comuna = await Pool.query(
-      "INSERT INTO comuna (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      "INSERT INTO comuna (comuna) VALUES ($1) ON CONFLICT (comuna) DO NOTHING",
       [comuna]
     );
     const id_comuna = await Pool.query(
-      "SELECT id_comuna FROM comuna WHERE nombre=$1",
+      "SELECT id_comuna FROM comuna WHERE comuna=$1",
       [comuna]
     );
 
     const insert_region = await Pool.query(
-      "INSERT INTO region (nombre) VALUES ($1) ON CONFLICT (nombre) DO NOTHING",
+      "INSERT INTO region (region) VALUES ($1) ON CONFLICT (region) DO NOTHING",
       [region]
     );
 
     const id_region = await Pool.query(
-      "SELECT id_region FROM region WHERE nombre=$1",
+      "SELECT id_region FROM region WHERE region=$1",
       [region]
     );
-    console.log(id_region.rows[0]);
+    // console.log(id_region.rows[0]);
 
     const consulta = await Pool.query(
       "INSERT INTO cliente (nombre, correo, direccion, telefono, user_instagram, id_comuna, id_region) VALUES ($1,$2,$3,$4,$5,$6,$7)",

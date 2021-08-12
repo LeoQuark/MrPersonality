@@ -60,7 +60,7 @@ export const createVenta = async (req, res) => {
 export const getAllVentas = async (req, res) => {
   try {
     const consulta = await Pool.query(
-      "SELECT x.fecha AS fecha, y.nombre AS cliente, w.nombre AS producto, q.cantidad AS cantidad, (q.cantidad*w.precio) AS total, r.tipo_compra AS tipo_compra FROM compra x JOIN cliente y on x.id_cliente = y.id_cliente JOIN tipo_pago z on x.id_tipo_pago = z.id_tipo_pago JOIN detalle_compra q on x.id_compra = q.id_compra JOIN producto w on q.id_producto = w.id_producto JOIN tipo_compra r on q.id_tipo_compra = r.id_tipo_compra ORDER BY fecha DESC"
+      "SELECT x.fecha AS fecha, y.nombre AS cliente, w.nombre AS producto, q.cantidad AS cantidad, (q.cantidad*w.precio) AS total, r.tipo_compra AS tipo_compra FROM tipo_compra x JOIN cliente y on x.id_cliente = y.id_cliente JOIN tipo_pago z on x.id_tipo_pago = z.id_tipo_pago JOIN detalle_compra q on x.id_compra = q.id_compra JOIN producto w on q.id_producto = w.id_producto JOIN tipo_compra r on q.id_tipo_compra = r.id_tipo_compra ORDER BY fecha DESC"
     );
     // console.log(consulta.rows);
     if (consulta.rows) {

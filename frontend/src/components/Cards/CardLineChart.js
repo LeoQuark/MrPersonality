@@ -36,7 +36,7 @@ export default function CardLineChart() {
             label: new Date().getFullYear(),
             backgroundColor: "#4c51bf",
             borderColor: "#4c51bf",
-            data: [65, 78, 66, 44, 56, 67, 75],
+            // data: [65, 78, 66, 44, 56, 67, 75],
             fill: false,
           },
           {
@@ -44,7 +44,7 @@ export default function CardLineChart() {
             fill: false,
             backgroundColor: "#fff",
             borderColor: "#fff",
-            data: [40, 68, 86, 74, 56, 60, 87],
+            // data: [40, 68, 86, 74, 56, 60, 87],
           },
         ],
       },

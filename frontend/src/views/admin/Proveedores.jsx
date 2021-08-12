@@ -50,11 +50,7 @@ const Proveedores = () => {
     <>
       <div className="flex flex-wrap mt-4 text-white">
         <div className="w-full lg:w-6/12 px-4">
-          <div
-            className={
-              "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white"
-            }
-          >
+          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
             <div className="rounded-t mb-0 px-4 py-3 border-0">
               <div className="flex flex-wrap items-center">
                 <div className="relative w-full px-4 max-w-full flex-grow flex-1">
